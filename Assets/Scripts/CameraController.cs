@@ -4,6 +4,8 @@ public class CameraController : MonoBehaviour
 {
     public float panSpeed = 20f; // Скорость перемещения камеры
     public float zoomSpeed = 10f; // Скорость приближения/отдаления камеры
+    public float minX = -10f; // Минимальная координата X
+    public float maxX = 10f; // Максимальная координата X
     private Vector3 lastMousePosition; // Последнее положение мыши
 
     private Camera mainCamera; // Ссылка на компонент Camera
@@ -31,8 +33,14 @@ public class CameraController : MonoBehaviour
             // Вычисляем разницу между текущим и последним положением мыши
             Vector3 delta = currentMousePosition - lastMousePosition;
 
-            // Перемещаем камеру в зависимости от движения мыши
-            transform.Translate(-delta.x * panSpeed * Time.deltaTime, -delta.y * panSpeed * Time.deltaTime, 0);
+            // Вычисляем новую позицию камеры
+            Vector3 newPosition = transform.position + new Vector3(-delta.x * panSpeed * Time.deltaTime, -delta.y * panSpeed * Time.deltaTime, 0);
+
+            // Ограничиваем перемещение по оси X
+            newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
+
+            // Применяем новую позицию камеры
+            transform.position = newPosition;
 
             // Обновляем последнее положение мыши
             lastMousePosition = currentMousePosition;
