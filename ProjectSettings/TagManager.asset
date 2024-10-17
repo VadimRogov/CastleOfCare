@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 3
   tags:
   - GridCell
+  - Psych
+  - Chamber
+  - LFK
+  - Lift
+  - New
   layers:
   - Default
   - TransparentFX
