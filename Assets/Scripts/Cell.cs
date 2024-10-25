@@ -1,14 +1,26 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Cell : MonoBehaviour
 {
-    public GameObject Closed; // Объект Closed
-    public GameObject Open;   // Объект Open
-    public bool isEmpty = false; // Поле для определения, свободна ли ячейка
+    public GameObject Closed; // Объект, который показывается, когда ячейка занята
+    public GameObject Open;   // Объект, который показывается, когда ячейка свободна
+    public bool isEmpty = true; // Изначально ячейка свободна
 
     void Start()
     {
         UpdateCellState();
+
+        // Добавляем обработчик события нажатия на кнопку Open
+        Button openButton = Open.GetComponent<Button>();
+        if (openButton != null)
+        {
+            openButton.onClick.AddListener(OnOpenButtonClicked);
+        }
+        else
+        {
+            Debug.LogError("Button component not found on Open object in cell: " + gameObject.name);
+        }
     }
 
     // Метод для обновления состояния ячейки
@@ -24,8 +36,15 @@ public class Cell : MonoBehaviour
         Open.SetActive(isEmpty);
     }
 
-    // Обработчик события нажатия на ячейку
-    private void OnMouseDown()
+    // Метод для сброса состояния ячейки
+    public void ResetCellState()
+    {
+        isEmpty = true; // Ячейка становится пустой
+        UpdateCellState();
+    }
+
+    // Обработчик события нажатия на кнопку Open
+    private void OnOpenButtonClicked()
     {
         if (isEmpty)
         {
@@ -37,11 +56,10 @@ public class Cell : MonoBehaviour
     // Метод для создания комнаты в ячейке
     private void CreateRoomInCell()
     {
-        // Находим скрипт RoomBuilder и вызываем метод для создания комнаты
         RoomBuilder roomBuilder = FindObjectOfType<RoomBuilder>();
         if (roomBuilder != null)
         {
-            // Предположим, что у вас есть префаб комнаты, который вы хотите использовать
+            // Загружаем префаб комнаты из ресурсов
             GameObject roomPrefab = Resources.Load<GameObject>("Prefabs/RoomPrefab");
             if (roomPrefab != null)
             {

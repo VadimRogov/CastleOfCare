@@ -2,15 +2,17 @@ using UnityEngine;
 
 public class RoomBuilder : MonoBehaviour
 {
-    // Метод для создания комнаты в выбранной ячейке
+    // РњРµС‚РѕРґ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РєРѕРјРЅР°С‚С‹ РІ СЏС‡РµР№РєРµ
     public void CreateRoomInCell(Cell cell, GameObject roomPrefab)
     {
         if (cell.isEmpty && roomPrefab != null)
         {
-            // Создаем экземпляр комнаты в выбранной ячейке
+            // РЎРѕР·РґР°РµРј СЌРєР·РµРјРїР»СЏСЂ РєРѕРјРЅР°С‚С‹ РІ СЏС‡РµР№РєРµ
             GameObject roomInstance = Instantiate(roomPrefab, cell.transform.position, Quaternion.identity);
             roomInstance.transform.SetParent(cell.transform, false);
-            cell.isEmpty = true;
+
+            // РџРѕСЃР»Рµ СЃРѕР·РґР°РЅРёСЏ РєРѕРјРЅР°С‚С‹ РѕС‚РјРµС‡Р°РµРј СЏС‡РµР№РєСѓ РєР°Рє Р·Р°РЅСЏС‚СѓСЋ
+            cell.isEmpty = false;
             cell.UpdateCellState();
         }
         else
