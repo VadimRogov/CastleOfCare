@@ -22,6 +22,8 @@ public class ShopPanelControll : MonoBehaviour
 
     public Button magicCategoryButton;
 
+    private ProductCard selectedProductCard;
+
     void Start()
     {
         foreach (CategoryPath categoryPath in categoryPaths)
@@ -128,10 +130,14 @@ public class ShopPanelControll : MonoBehaviour
                 ProductCard productCard = productInstance.GetComponent<ProductCard>();
                 if (productCard != null && productCard.productPrefab != null)
                 {
-                    RoomBuilder roomBuilder = FindObjectOfType<RoomBuilder>();
-                    roomBuilder?.CreateRoomInCell(freeCell, productCard.productPrefab);
+                    selectedProductCard = productCard;
                 }
             }
         }
+    }
+
+    public ProductCard GetSelectedProductCard()
+    {
+        return selectedProductCard;
     }
 }

@@ -187,9 +187,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c013325dd2f9974889b5274e2f441e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Closed: {fileID: 947966686}
-  Open: {fileID: 1718860901}
   isEmpty: 0
+  openObject: {fileID: 1718860901}
+  closedObject: {fileID: 947966686}
+  isOpenForBuilding: 0
 --- !u!1 &40426064
 GameObject:
   m_ObjectHideFlags: 0
@@ -821,7 +822,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 75702940}
-  - component: {fileID: 75702942}
   - component: {fileID: 75702941}
   - component: {fileID: 75702943}
   m_Layer: 0
@@ -869,18 +869,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &75702942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 75702939}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0fc5ba61b956bc4296bbe689d073db0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &75702943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -893,9 +881,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c013325dd2f9974889b5274e2f441e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Closed: {fileID: 1485683452}
-  Open: {fileID: 1454144424}
   isEmpty: 1
+  openObject: {fileID: 1454144424}
+  closedObject: {fileID: 1485683452}
+  isOpenForBuilding: 0
 --- !u!1 &85600688
 GameObject:
   m_ObjectHideFlags: 0
@@ -964,9 +953,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c013325dd2f9974889b5274e2f441e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Closed: {fileID: 1860088516}
-  Open: {fileID: 1954773487}
   isEmpty: 0
+  openObject: {fileID: 1954773487}
+  closedObject: {fileID: 1860088516}
+  isOpenForBuilding: 0
 --- !u!1 &94921252
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,9 +1025,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c013325dd2f9974889b5274e2f441e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Closed: {fileID: 1358339043}
-  Open: {fileID: 1967241237}
   isEmpty: 0
+  openObject: {fileID: 1967241237}
+  closedObject: {fileID: 1358339043}
+  isOpenForBuilding: 0
 --- !u!1 &98744690
 GameObject:
   m_ObjectHideFlags: 0
@@ -1323,7 +1314,6 @@ GameObject:
   m_Component:
   - component: {fileID: 101872858}
   - component: {fileID: 101872859}
-  - component: {fileID: 101872860}
   - component: {fileID: 101872861}
   m_Layer: 0
   m_Name: Cell2
@@ -1370,18 +1360,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &101872860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 101872857}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0fc5ba61b956bc4296bbe689d073db0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &101872861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1394,9 +1372,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c013325dd2f9974889b5274e2f441e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Closed: {fileID: 1941952956}
-  Open: {fileID: 1189511856}
   isEmpty: 1
+  openObject: {fileID: 1189511856}
+  closedObject: {fileID: 1941952956}
+  isOpenForBuilding: 0
 --- !u!1 &116344747
 GameObject:
   m_ObjectHideFlags: 0
@@ -2258,6 +2237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 330181165}
+  - component: {fileID: 330181166}
   m_Layer: 0
   m_Name: Stage3
   m_TagString: Untagged
@@ -2284,6 +2264,23 @@ Transform:
   - {fileID: 681375324}
   m_Father: {fileID: 1641487662}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &330181166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330181164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1139de2ca3feb7a4dbf1a09aa21b09d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cells:
+  - {fileID: 1557078467}
+  - {fileID: 94921255}
+  - {fileID: 85600691}
+  - {fileID: 681375326}
 --- !u!1 &333810362
 GameObject:
   m_ObjectHideFlags: 0
@@ -2549,6 +2546,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 381219654}
+  - component: {fileID: 381219655}
   m_Layer: 0
   m_Name: Stage1
   m_TagString: Untagged
@@ -2576,6 +2574,24 @@ Transform:
   - {fileID: 1845362134}
   m_Father: {fileID: 1641487662}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &381219655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381219653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1139de2ca3feb7a4dbf1a09aa21b09d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cells:
+  - {fileID: 75702943}
+  - {fileID: 101872861}
+  - {fileID: 1918802801}
+  - {fileID: 1886144697}
+  - {fileID: 1845362136}
 --- !u!1 &382812110
 GameObject:
   m_ObjectHideFlags: 0
@@ -4384,9 +4400,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c013325dd2f9974889b5274e2f441e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Closed: {fileID: 824936057}
-  Open: {fileID: 503980462}
   isEmpty: 0
+  openObject: {fileID: 503980462}
+  closedObject: {fileID: 824936057}
+  isOpenForBuilding: 0
 --- !u!1 &663996832
 GameObject:
   m_ObjectHideFlags: 0
@@ -4732,9 +4749,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c013325dd2f9974889b5274e2f441e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Closed: {fileID: 1020582873}
-  Open: {fileID: 66337215}
   isEmpty: 0
+  openObject: {fileID: 66337215}
+  closedObject: {fileID: 1020582873}
+  isOpenForBuilding: 0
 --- !u!1 &698181532
 GameObject:
   m_ObjectHideFlags: 0
@@ -7937,9 +7955,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c013325dd2f9974889b5274e2f441e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Closed: {fileID: 663996832}
-  Open: {fileID: 1834985828}
   isEmpty: 0
+  openObject: {fileID: 1834985828}
+  closedObject: {fileID: 663996832}
+  isOpenForBuilding: 0
 --- !u!1 &1188625713
 GameObject:
   m_ObjectHideFlags: 0
@@ -8348,9 +8367,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c013325dd2f9974889b5274e2f441e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Closed: {fileID: 455687729}
-  Open: {fileID: 156299425}
   isEmpty: 0
+  openObject: {fileID: 156299425}
+  closedObject: {fileID: 455687729}
+  isOpenForBuilding: 0
 --- !u!1 &1249426938
 GameObject:
   m_ObjectHideFlags: 0
@@ -10253,9 +10273,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c013325dd2f9974889b5274e2f441e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Closed: {fileID: 1023662026}
-  Open: {fileID: 726338998}
   isEmpty: 0
+  openObject: {fileID: 726338998}
+  closedObject: {fileID: 1023662026}
+  isOpenForBuilding: 0
 --- !u!1001 &1631991106
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11518,9 +11539,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c013325dd2f9974889b5274e2f441e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Closed: {fileID: 1199964013}
-  Open: {fileID: 409964807}
   isEmpty: 0
+  openObject: {fileID: 409964807}
+  closedObject: {fileID: 1199964013}
+  isOpenForBuilding: 0
 --- !u!1 &1848753633
 GameObject:
   m_ObjectHideFlags: 0
@@ -11833,9 +11855,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c013325dd2f9974889b5274e2f441e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Closed: {fileID: 1019217668}
-  Open: {fileID: 1661245846}
   isEmpty: 0
+  openObject: {fileID: 1661245846}
+  closedObject: {fileID: 1019217668}
+  isOpenForBuilding: 0
 --- !u!1 &1886144694
 GameObject:
   m_ObjectHideFlags: 0
@@ -11904,9 +11927,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c013325dd2f9974889b5274e2f441e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Closed: {fileID: 727780735}
-  Open: {fileID: 1470616821}
   isEmpty: 0
+  openObject: {fileID: 1470616821}
+  closedObject: {fileID: 727780735}
+  isOpenForBuilding: 0
 --- !u!1 &1918802797
 GameObject:
   m_ObjectHideFlags: 0
@@ -11988,9 +12012,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c013325dd2f9974889b5274e2f441e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Closed: {fileID: 1798062534}
-  Open: {fileID: 1201882092}
   isEmpty: 0
+  openObject: {fileID: 1201882092}
+  closedObject: {fileID: 1798062534}
+  isOpenForBuilding: 0
 --- !u!1 &1926380528
 GameObject:
   m_ObjectHideFlags: 0
@@ -13345,6 +13370,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2146531639}
+  - component: {fileID: 2146531640}
   m_Layer: 0
   m_Name: Stage2
   m_TagString: Untagged
@@ -13372,6 +13398,24 @@ Transform:
   - {fileID: 1202574913}
   m_Father: {fileID: 1641487662}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2146531640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146531638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1139de2ca3feb7a4dbf1a09aa21b09d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cells:
+  - {fileID: 1864218046}
+  - {fileID: 1177253099}
+  - {fileID: 615957787}
+  - {fileID: 22160854}
+  - {fileID: 1202574915}
 --- !u!1 &97711591293422748
 GameObject:
   m_ObjectHideFlags: 0
