@@ -2,29 +2,33 @@ using UnityEngine;
 
 public class Cell : MonoBehaviour
 {
-    public bool isEmpty = true;
-    public GameObject openObject; // Объект, который отображается, когда ячейка свободна и активна для строительства
-    public GameObject closedObject; // Объект, который отображается, когда ячейка занята
+    [SerializeField] private bool isEmpty = true;
 
-    public bool isOpenForBuilding = false; // Флаг, чтобы отслеживать, активна ли ячейка для строительства
+    [SerializeField] private GameObject closed;
+    [SerializeField] private GameObject open;
 
-    public void SetOpenForBuilding(bool isOpen)
+    public bool IsEmpty
     {
-        isOpenForBuilding = isOpen;
-        UpdateCellState();
+        get { return isEmpty; }
+        private set { isEmpty = value; }
     }
 
-    public void UpdateCellState()
+
+    public void SetCondition()
     {
-        if (isEmpty)
+        if(isEmpty) 
         {
-            openObject.SetActive(isOpenForBuilding);
-            closedObject.SetActive(false);
+            closed.SetActive(false);
+            open.SetActive(true);
         }
-        else
+    }
+
+    public void SetReturn(bool isBuild)
+    {
+        if(!isBuild)
         {
-            openObject.SetActive(false);
-            closedObject.SetActive(true);
+            closed.SetActive(true);
+            open.SetActive(false);
         }
     }
 }

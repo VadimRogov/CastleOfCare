@@ -123,7 +123,7 @@ public class ShopPanelControll : MonoBehaviour
         if (productInstance.CompareTag("Build"))
         {
             CellManager cellManager = FindObjectOfType<CellManager>();
-            Cell freeCell = cellManager?.HighlightFirstFreeCell();
+            Cell freeCell = cellManager?.FindFirstStage();
 
             if (freeCell != null)
             {
@@ -132,6 +132,10 @@ public class ShopPanelControll : MonoBehaviour
                 {
                     selectedProductCard = productCard;
                 }
+            }
+            else
+            {
+                Debug.LogWarning("No free cell available for building.");
             }
         }
     }
