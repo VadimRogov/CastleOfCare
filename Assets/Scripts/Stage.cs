@@ -12,9 +12,10 @@ public class Stage : MonoBehaviour
 
     public Cell FindFirstCell()
     {
-        foreach(Cell cell in cells)
+        foreach (Cell cell in cells)
         {
-            if(cell.IsEmpty) {
+            if (cell.IsEmpty)
+            {
                 cell.SetCondition();
                 return cell;
             }

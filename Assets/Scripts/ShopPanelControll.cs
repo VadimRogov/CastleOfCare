@@ -14,9 +14,11 @@ public class ShopPanelControll : MonoBehaviour
     public GameObject shopPanel;
     public GameObject[] buttonsToHide;
     public Transform productContent;
+
     public List<CategoryPath> categoryPaths = new List<CategoryPath>();
 
     private Button currentSelectedCategoryButton;
+
     private Color selectedColor = new Color(0.5f, 1f, 0f);
     private Color defaultColor = Color.white;
 
@@ -28,16 +30,19 @@ public class ShopPanelControll : MonoBehaviour
     {
         foreach (CategoryPath categoryPath in categoryPaths)
         {
-            CategoryPath capturedCategoryPath = categoryPath;
+            CategoryPath capturedCategoryPath = categoryPath; // Захватываем текущее значение для замыкания
             categoryPath.categoryButton.onClick.AddListener(() => OnCategoryButtonClicked(capturedCategoryPath));
         }
+
+        CloseShopPanel(); // Закрываем панель при старте, если нужно.
     }
 
     public void OpenShopPanel()
     {
         shopPanel.SetActive(true);
         HideButtons();
-        magicCategoryButton?.onClick.Invoke();
+
+        magicCategoryButton?.onClick.Invoke(); // Открываем первую категорию, если она задана.
     }
 
     public void CloseShopPanel()
@@ -70,6 +75,7 @@ public class ShopPanelControll : MonoBehaviour
         }
 
         currentSelectedCategoryButton = categoryPath.categoryButton;
+
         ChangeButtonColor(currentSelectedCategoryButton, selectedColor);
 
         ShowProductsForCategory(categoryPath.path);
@@ -78,6 +84,7 @@ public class ShopPanelControll : MonoBehaviour
     private void ChangeButtonColor(Button button, Color color)
     {
         Image buttonImage = button.GetComponent<Image>();
+
         if (buttonImage != null)
         {
             buttonImage.color = color;
@@ -88,10 +95,11 @@ public class ShopPanelControll : MonoBehaviour
     {
         foreach (Transform child in productContent)
         {
-            Destroy(child.gameObject);
+            Destroy(child.gameObject); // Удаляем старые продукты.
         }
 
-        GameObject[] productPrefabs = Resources.LoadAll<GameObject>(path);
+        GameObject[] productPrefabs = Resources.LoadAll<GameObject>(path); // Загружаем префабы продуктов.
+
         if (productPrefabs.Length == 0)
         {
             Debug.LogWarning($"No product prefabs found in the path: {path}");
@@ -100,14 +108,17 @@ public class ShopPanelControll : MonoBehaviour
 
         foreach (GameObject prefab in productPrefabs)
         {
-            GameObject productInstance = Instantiate(prefab, productContent);
+            GameObject productInstance = Instantiate(prefab, productContent); // Создаем экземпляр продукта.
+
             Text productName = productInstance.GetComponentInChildren<Text>();
+
             if (productName != null)
             {
-                productName.text = prefab.name;
+                productName.text = prefab.name; // Устанавливаем имя продукта.
             }
 
             Button productButton = productInstance.GetComponentInChildren<Button>();
+
             if (productButton != null)
             {
                 productButton.onClick.AddListener(() => OnProductButtonClicked(productInstance));
@@ -128,9 +139,11 @@ public class ShopPanelControll : MonoBehaviour
             if (freeCell != null)
             {
                 ProductCard productCard = productInstance.GetComponent<ProductCard>();
+
                 if (productCard != null && productCard.productPrefab != null)
                 {
-                    selectedProductCard = productCard;
+                    selectedProductCard = productCard; // Сохраняем выбранный продукт.
+                    freeCell.SetCondition(); // Выделяем свободную ячейку.
                 }
             }
             else
@@ -142,6 +155,6 @@ public class ShopPanelControll : MonoBehaviour
 
     public ProductCard GetSelectedProductCard()
     {
-        return selectedProductCard;
+        return selectedProductCard; // Возвращаем выбранную карточку продукта.
     }
 }
