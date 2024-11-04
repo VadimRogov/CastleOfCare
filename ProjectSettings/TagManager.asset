@@ -12,6 +12,7 @@ TagManager:
   - New
   - Product
   - Build
+  - Cat
   layers:
   - Default
   - TransparentFX

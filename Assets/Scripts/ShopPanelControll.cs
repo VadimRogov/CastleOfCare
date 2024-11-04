@@ -1,160 +1,182 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-[System.Serializable]
-public class CategoryPath
-{
-    public Button categoryButton;
-    public string path;
-}
+using System.Collections.Generic;
 
 public class ShopPanelControll : MonoBehaviour
 {
-    public GameObject shopPanel;
-    public GameObject[] buttonsToHide;
-    public Transform productContent;
+   [System.Serializable]
+   public class CategoryPath
+   {
+       public Button categoryButton;
+       public string path;
+   }
 
-    public List<CategoryPath> categoryPaths = new List<CategoryPath>();
+   public GameObject shopPanel; 
+   public GameObject[] buttonsToHide;
+   public Transform productContent;
 
-    private Button currentSelectedCategoryButton;
+   public List<CategoryPath> categoryPaths = new List<CategoryPath>();
 
-    private Color selectedColor = new Color(0.5f, 1f, 0f);
-    private Color defaultColor = Color.white;
+   private Button currentSelectedCategoryButton;
+   private Color selectedColor = new Color(0.5f, 1f, 0f); 
+   private Color defaultColor = Color.white;
 
-    public Button magicCategoryButton;
+   private ProductCard selectedProductCard;
 
-    private ProductCard selectedProductCard;
+   void Start()
+   {
+       foreach (CategoryPath categoryPath in categoryPaths)
+       {
+           CategoryPath capturedCategoryPath = categoryPath;
+           categoryPath.categoryButton.onClick.AddListener(() => OnCategoryButtonClicked(capturedCategoryPath));
+       }
 
-    void Start()
-    {
-        foreach (CategoryPath categoryPath in categoryPaths)
-        {
-            CategoryPath capturedCategoryPath = categoryPath; // Захватываем текущее значение для замыкания
-            categoryPath.categoryButton.onClick.AddListener(() => OnCategoryButtonClicked(capturedCategoryPath));
-        }
+       CloseShopPanel(); 
+   }
 
-        CloseShopPanel(); // Закрываем панель при старте, если нужно.
-    }
+   public void OpenShopPanel()
+   {
+       shopPanel.SetActive(true);
+       HideButtons();
+       ShowProductsForCategory(categoryPaths[0].path); 
+   }
 
-    public void OpenShopPanel()
-    {
-        shopPanel.SetActive(true);
-        HideButtons();
+   public void CloseShopPanel()
+   {
+       shopPanel.SetActive(false);
+       ShowButtons();
+   }
 
-        magicCategoryButton?.onClick.Invoke(); // Открываем первую категорию, если она задана.
-    }
+   private void HideButtons()
+   {
+       foreach (GameObject button in buttonsToHide)
+       {
+           button.SetActive(false);
+       }
+   }
 
-    public void CloseShopPanel()
-    {
-        shopPanel.SetActive(false);
-        ShowButtons();
-    }
+   private void ShowButtons()
+   {
+       foreach (GameObject button in buttonsToHide)
+       {
+           button.SetActive(true);
+       }
+   }
 
-    private void HideButtons()
-    {
-        foreach (GameObject button in buttonsToHide)
-        {
-            button.SetActive(false);
-        }
-    }
+   private void OnCategoryButtonClicked(CategoryPath categoryPath)
+   {
+       if (currentSelectedCategoryButton != null)
+       {
+           ChangeButtonColor(currentSelectedCategoryButton, defaultColor);
+       }
 
-    private void ShowButtons()
-    {
-        foreach (GameObject button in buttonsToHide)
-        {
-            button.SetActive(true);
-        }
-    }
+       currentSelectedCategoryButton = categoryPath.categoryButton;
 
-    private void OnCategoryButtonClicked(CategoryPath categoryPath)
-    {
-        if (currentSelectedCategoryButton != null)
-        {
-            ChangeButtonColor(currentSelectedCategoryButton, defaultColor);
-        }
+       ChangeButtonColor(currentSelectedCategoryButton, selectedColor);
 
-        currentSelectedCategoryButton = categoryPath.categoryButton;
+       ShowProductsForCategory(categoryPath.path);
+   }
 
-        ChangeButtonColor(currentSelectedCategoryButton, selectedColor);
+   private void ChangeButtonColor(Button button, Color color)
+   {
+       Image buttonImage = button.GetComponent<Image>();
 
-        ShowProductsForCategory(categoryPath.path);
-    }
+       if (buttonImage != null)
+       {
+           buttonImage.color = color;
+       }
+   }
 
-    private void ChangeButtonColor(Button button, Color color)
-    {
-        Image buttonImage = button.GetComponent<Image>();
+   public void ShowProductsForCategory(string path)
+   {
+       foreach (Transform child in productContent)
+       {
+           Destroy(child.gameObject); 
+       }
 
-        if (buttonImage != null)
-        {
-            buttonImage.color = color;
-        }
-    }
+       GameObject[] productPrefabs = Resources.LoadAll<GameObject>(path); 
 
-    public void ShowProductsForCategory(string path)
-    {
-        foreach (Transform child in productContent)
-        {
-            Destroy(child.gameObject); // Удаляем старые продукты.
-        }
+       if (productPrefabs.Length == 0)
+       {
+           Debug.LogWarning($"No product prefabs found in the path: {path}");
+           return;
+       }
 
-        GameObject[] productPrefabs = Resources.LoadAll<GameObject>(path); // Загружаем префабы продуктов.
+       foreach (GameObject prefab in productPrefabs)
+       {
+           GameObject productInstance = Instantiate(prefab, productContent); 
 
-        if (productPrefabs.Length == 0)
-        {
-            Debug.LogWarning($"No product prefabs found in the path: {path}");
-            return;
-        }
+           Text productName = productInstance.GetComponentInChildren<Text>();
 
-        foreach (GameObject prefab in productPrefabs)
-        {
-            GameObject productInstance = Instantiate(prefab, productContent); // Создаем экземпляр продукта.
+           if (productName != null)
+           {
+               productName.text = prefab.name; 
+           }
 
-            Text productName = productInstance.GetComponentInChildren<Text>();
+           Button productButton = productInstance.GetComponentInChildren<Button>();
 
-            if (productName != null)
-            {
-                productName.text = prefab.name; // Устанавливаем имя продукта.
-            }
+           if (productButton != null)
+           {
+               productButton.onClick.AddListener(() => OnProductButtonClicked(productInstance));
+           }
+       }
+   }
 
-            Button productButton = productInstance.GetComponentInChildren<Button>();
+   private void OnProductButtonClicked(GameObject productInstance)
+{
+    Debug.Log("Product button clicked: " + productInstance.name);
+    CloseShopPanel();
 
-            if (productButton != null)
-            {
-                productButton.onClick.AddListener(() => OnProductButtonClicked(productInstance));
-            }
-        }
-    }
-
-    private void OnProductButtonClicked(GameObject productInstance)
-    {
-        Debug.Log("Product button clicked: " + productInstance.name);
-        CloseShopPanel();
-
-        if (productInstance.CompareTag("Build"))
-        {
+    if (productInstance.CompareTag("Build")) // РџСЂРѕРІРµСЂСЏРµРј, СЏРІР»СЏРµС‚СЃСЏ Р»Рё РїСЂРѕРґСѓРєС‚ СЃС‚СЂРѕРёС‚РµР»РµРј
+    {   
+        ProductCard productCard = productInstance.GetComponent<ProductCard>();
+        if(productCard != null) 
+        { 
+            selectedProductCard = productCard;
             CellManager cellManager = FindObjectOfType<CellManager>();
-            Cell freeCell = cellManager?.FindFirstStage();
+            if(cellManager == null) 
+            { 
+                Debug.LogError("CellManager not found in the scene."); 
+                return; 
+            } 
 
-            if (freeCell != null)
-            {
-                ProductCard productCard = productInstance.GetComponent<ProductCard>();
+            Cell freeCell = cellManager.FindCellForFirsStages(); 
 
-                if (productCard != null && productCard.productPrefab != null)
-                {
-                    selectedProductCard = productCard; // Сохраняем выбранный продукт.
-                    freeCell.SetCondition(); // Выделяем свободную ячейку.
-                }
-            }
-            else
-            {
-                Debug.LogWarning("No free cell available for building.");
-            }
-        }
-    }
+            if(freeCell != null) 
+            { 
+                RoomBuilder roomBuilder = FindObjectOfType<RoomBuilder>(); 
+                roomBuilder.BuildRoomInCell(freeCell, selectedProductCard.productPrefab, productInstance.tag); // РџРµСЂРµРґР°РµРј С‚РµРі РїСЂРѕРґСѓРєС‚Р°
+            } 
+            else 
+            { 
+                Debug.LogWarning("No free cell available for building."); 
+            } 
+        } 
+    }  
+}
 
-    public ProductCard GetSelectedProductCard()
-    {
-        return selectedProductCard; // Возвращаем выбранную карточку продукта.
-    }
+  public void SelectProductCard(ProductCard card) 
+  { 
+      selectedProductCard = card; 
+  } 
+
+  private void ResetAllCells() 
+  { 
+      CellManager cellManager = FindObjectOfType<CellManager>(); 
+      if(cellManager != null) 
+      { 
+          foreach(Stage stage in cellManager.Stages) 
+          {  
+              foreach(Cell cell in stage.Cells) 
+              {  
+                  cell.SetCellReturnBuild();  
+              }  
+          }  
+      }  
+  }  
+
+  public ProductCard GetSelectedProductCard()  
+  {  
+      return selectedProductCard;  
+  }  
 }

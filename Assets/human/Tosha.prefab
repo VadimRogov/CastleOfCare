@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 175718383339943132}
   - component: {fileID: 3188035958159624624}
   m_Layer: 0
-  m_Name: human
+  m_Name: Tosha
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

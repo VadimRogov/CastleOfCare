@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: -4108958447778539113}
   m_Layer: 5
   m_Name: 4Lift
-  m_TagString: Build
+  m_TagString: Lift
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

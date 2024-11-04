@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Stage : MonoBehaviour
 {
-    [SerializeField] private Cell[] cells;
+    [SerializeField] private Cell[] cells; // Массив всех ячеек
 
     public Cell[] Cells
     {
@@ -14,9 +14,10 @@ public class Stage : MonoBehaviour
     {
         foreach (Cell cell in cells)
         {
-            if (cell.IsEmpty)
+            Debug.Log($"Checking cell: {cell.name}, IsEmpty: {cell.IsEmpty}"); // Отладочное сообщение
+            if (cell.IsEmpty) // Используем свойство IsEmpty
             {
-                cell.SetCondition();
+                cell.SetCellEmpty(false, true);
                 return cell;
             }
         }

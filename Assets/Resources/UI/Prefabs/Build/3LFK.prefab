@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6472657359615975920}
   m_Layer: 5
   m_Name: 3LFK
-  m_TagString: Build
+  m_TagString: LFK
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
