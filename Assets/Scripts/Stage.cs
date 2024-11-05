@@ -2,25 +2,39 @@ using UnityEngine;
 
 public class Stage : MonoBehaviour
 {
-    [SerializeField] private Cell[] cells; // Массив всех ячеек
+   [SerializeField] private Cell[] cells; // Массив всех ячеек
 
-    public Cell[] Cells
-    {
-        get { return cells; }
-        private set { cells = value; }
-    }
+   public Cell[] Cells => cells;
 
-    public Cell FindFirstCell()
+   public Cell FindFirstCell()
+   {
+       foreach (Cell cell in cells)
+       {
+           Debug.Log($"Checking cell: {cell.name}, IsEmpty: {cell.IsEmpty}"); 
+           if (cell.IsEmpty) 
+           { 
+               cell.SetCellEmpty(false, true);
+               return cell;
+           }
+       }
+       
+      Debug.LogWarning("No empty cells available.");
+      return null;
+   }
+
+   public Cell FindCellWithRoomByTag(string tag)
     {
-        foreach (Cell cell in cells)
+    foreach (Cell cell in cells)
+    {
+        Transform room = cell.FindRoomInCellByTag(tag); // Используем новый метод из Cell
+        if (room != null) // Если комната найдена
         {
-            Debug.Log($"Checking cell: {cell.name}, IsEmpty: {cell.IsEmpty}"); // Отладочное сообщение
-            if (cell.IsEmpty) // Используем свойство IsEmpty
-            {
-                cell.SetCellEmpty(false, true);
-                return cell;
-            }
+            return cell; // Возвращаем ячейку, содержащую комнату
         }
-        return null;
     }
+
+    Debug.LogWarning($"Ячейка с комнатой с тегом '{tag}' не найдена.");
+    return null; // Возвращаем null, если не нашли такую ячейку
+    }
+
 }

@@ -2014,8 +2014,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6794360e518a64408766da02947ffce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectSound: {fileID: 8300000, guid: 718ef6cf391938a44b7c32057e7868e6, type: 3}
-  backgroundMusic: {fileID: 8300000, guid: 7b168e10818e9404380ba15bb798aa19, type: 3}
   shopPanel: {fileID: 1019486544}
   buttonsToHide:
   - {fileID: 903679639}
@@ -2031,6 +2029,8 @@ MonoBehaviour:
     path: UI/Prefabs/MagicPuzzles/
   - categoryButton: {fileID: 382812112}
     path: UI/Prefabs/Build/
+  buttonClickSound: {fileID: 8300000, guid: 718ef6cf391938a44b7c32057e7868e6, type: 3}
+  backgroundMusic: {fileID: 8300000, guid: 7b168e10818e9404380ba15bb798aa19, type: 3}
 --- !u!4 &190711579
 Transform:
   m_ObjectHideFlags: 0
@@ -9795,6 +9795,18 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: cb10cb9cf3a345c40a2f4e590fa54ee2, type: 2}
+    - target: {fileID: 468107813913211169, guid: 6ee8e704d48b7194f9dd76e8bfa2abd4, type: 3}
+      propertyPath: m_Size.x
+      value: 5.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 468107813913211169, guid: 6ee8e704d48b7194f9dd76e8bfa2abd4, type: 3}
+      propertyPath: m_Size.y
+      value: -3.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 468107813913211169, guid: 6ee8e704d48b7194f9dd76e8bfa2abd4, type: 3}
+      propertyPath: m_Size.z
+      value: 1.87
+      objectReference: {fileID: 0}
     - target: {fileID: 7232941199985798181, guid: 6ee8e704d48b7194f9dd76e8bfa2abd4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 23.970001
@@ -9834,6 +9846,10 @@ PrefabInstance:
     - target: {fileID: 7232941199985798181, guid: 6ee8e704d48b7194f9dd76e8bfa2abd4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8951198493279162657, guid: 6ee8e704d48b7194f9dd76e8bfa2abd4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.81
       objectReference: {fileID: 0}
     - target: {fileID: 8953749773769289715, guid: 6ee8e704d48b7194f9dd76e8bfa2abd4, type: 3}
       propertyPath: m_Name

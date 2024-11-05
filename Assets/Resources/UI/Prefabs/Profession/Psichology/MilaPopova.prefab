@@ -405,9 +405,10 @@ GameObject:
   - component: {fileID: 878193964877560606}
   - component: {fileID: 5949449804041834854}
   - component: {fileID: 3563570037082433258}
+  - component: {fileID: 7669941243978563051}
   m_Layer: 5
   m_Name: MilaPopova
-  m_TagString: Untagged
+  m_TagString: Psych
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -515,3 +516,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7669941243978563051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4246684962151385803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e25cee0c6bce1241acf08766fcbd505, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  personalPrefab: {fileID: 2419890193665279411, guid: 583d1f834fe9af041b916932d8462fba, type: 3}
+  personalButton: {fileID: 3563570037082433258}

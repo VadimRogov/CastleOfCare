@@ -4,22 +4,37 @@ public class CellManager : MonoBehaviour
 {
     [SerializeField] private Stage[] stages; // Массив всех стадий
 
-    public Stage[] Stages => stages; // Свойство для доступа к стадиям
+   public Stage[] Stages => stages; // Свойство для доступа к стадиям
 
-    public Cell FindCellForFirsStages()
+   public Cell FindCellForFirstStages() 
+   {
+       foreach (Stage stage in stages) 
+       { 
+           foreach (Cell cell in stage.Cells) 
+           { 
+               if (cell.IsEmpty) 
+               { 
+                   return cell; 
+               } 
+           } 
+       }
+
+       Debug.LogWarning("No free cell available for building.");
+       return null; 
+   }
+
+   public Cell FindCellWithRoomByTag(string tag)
+{
+    foreach (Stage stage in stages)
     {
-        foreach (Stage stage in stages) // Перебираем все стадии для поиска свободной ячейки
+        Cell cell = stage.FindCellWithRoomByTag(tag); // Используем метод Stage
+        if (cell != null)
         {
-            foreach (Cell cell in stage.Cells) // Перебираем все ячейки в стадии
-            {
-                if (cell.IsEmpty) // Используем свойство IsEmpty вместо поля isEmpty
-                {
-                    return cell; // Возвращаем первую свободную ячейку
-                }
-            }
+            return cell; // Возвращаем первую найденную ячейку с указанным тегом комнаты
         }
-
-        Debug.LogWarning("No free cell available for building.");
-        return null; // Если свободных ячеек нет, возвращаем null
     }
+
+    Debug.LogWarning($"Ячейка с комнатой с тегом '{tag}' не найдена ни на одной стадии.");
+    return null; // Возвращаем null, если не нашли ни на одной стадии
+}
 }

@@ -17,7 +17,9 @@ public class ProductCard : MonoBehaviour
    private void OnProductButtonClicked()
    {
        Debug.Log($"Product {productPrefab.name} selected for building.");
+       
        ShopPanelControll shopPanelControll = FindObjectOfType<ShopPanelControll>();
+       
        if (shopPanelControll != null)
        {
            shopPanelControll.SelectProductCard(this); // Передаем ссылку на текущую карточку продукта в контроллер магазина.

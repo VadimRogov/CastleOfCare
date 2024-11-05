@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 6054958924117435280}
   - component: {fileID: 8990772609371114945}
   - component: {fileID: 9063249624501115080}
+  - component: {fileID: 5838824252752142698}
   m_Layer: 5
   m_Name: SvetlanaIvanova
-  m_TagString: Psych
+  m_TagString: LFK
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,6 +123,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5838824252752142698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3533228314427282220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e25cee0c6bce1241acf08766fcbd505, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  personalPrefab: {fileID: 2974777294012845610, guid: 849c03b808af89e47b12cfdda57900d2, type: 3}
+  personalButton: {fileID: 9063249624501115080}
 --- !u!1 &3927596660810719267
 GameObject:
   m_ObjectHideFlags: 0
