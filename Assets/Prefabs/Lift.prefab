@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 8589011800457896045}
   m_Layer: 0
   m_Name: R Door
-  m_TagString: Untagged
+  m_TagString: R Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -993,7 +993,7 @@ GameObject:
   - component: {fileID: 1336762575705013021}
   m_Layer: 0
   m_Name: L Door
-  m_TagString: Untagged
+  m_TagString: L Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2172,7 +2172,7 @@ GameObject:
   - component: {fileID: 4240511092400234593}
   m_Layer: 0
   m_Name: Kabina
-  m_TagString: Untagged
+  m_TagString: Cabin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2922,7 +2922,7 @@ GameObject:
   - component: {fileID: 386832781954381022}
   m_Layer: 0
   m_Name: Lift
-  m_TagString: Untagged
+  m_TagString: Lift
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

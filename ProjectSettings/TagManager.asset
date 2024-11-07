@@ -13,6 +13,9 @@ TagManager:
   - Product
   - Build
   - Cat
+  - L Door
+  - R Door
+  - Cabin
   layers:
   - Default
   - TransparentFX
