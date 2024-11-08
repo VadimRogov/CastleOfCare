@@ -16,6 +16,9 @@ TagManager:
   - L Door
   - R Door
   - Cabin
+  - Stage1
+  - Stage2
+  - Stage3
   layers:
   - Default
   - TransparentFX

@@ -2477,7 +2477,7 @@ GameObject:
   - component: {fileID: 330181166}
   m_Layer: 0
   m_Name: Stage3
-  m_TagString: Untagged
+  m_TagString: Stage3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3336,7 +3336,7 @@ GameObject:
   - component: {fileID: 381219655}
   m_Layer: 0
   m_Name: Stage1
-  m_TagString: Untagged
+  m_TagString: Stage1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12879,10 +12879,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a96b7c8e24d60e0498219c5357e8717f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCabin: 0
   listLift:
   - {fileID: 101872861}
   - {fileID: 1177253099}
   - {fileID: 1557078467}
+  cellWithCabin: {fileID: 0}
 --- !u!4 &1640152620
 Transform:
   m_ObjectHideFlags: 0
@@ -16746,7 +16748,7 @@ GameObject:
   - component: {fileID: 2146531640}
   m_Layer: 0
   m_Name: Stage2
-  m_TagString: Untagged
+  m_TagString: Stage2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

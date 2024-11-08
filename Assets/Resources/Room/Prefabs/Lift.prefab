@@ -619,7 +619,7 @@ GameObject:
   - component: {fileID: 7434123050993085673}
   m_Layer: 0
   m_Name: L Door
-  m_TagString: Untagged
+  m_TagString: L Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1813,6 +1813,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1663383621993745922}
+  - component: {fileID: 7710166820057135051}
   m_Layer: 0
   m_Name: Lift
   m_TagString: Lift
@@ -1829,7 +1830,7 @@ Transform:
   m_GameObject: {fileID: 5102418071742815092}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 48.622215, y: 0, z: -79.29551}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1861,6 +1862,20 @@ Transform:
   - {fileID: 3697097220103781829}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7710166820057135051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5102418071742815092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79c74dc21c448394389897c4cb2c4cd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lDoor: {fileID: 5247121889801383321}
+  rDoor: {fileID: 6781461303875740462}
 --- !u!1 &5128191864115457223
 GameObject:
   m_ObjectHideFlags: 0
@@ -2923,7 +2938,7 @@ GameObject:
   - component: {fileID: 2002691806312955758}
   m_Layer: 0
   m_Name: Kabina
-  m_TagString: Untagged
+  m_TagString: Cabin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3438,7 +3453,7 @@ GameObject:
   - component: {fileID: 2069536024141812546}
   m_Layer: 0
   m_Name: R Door
-  m_TagString: Untagged
+  m_TagString: R Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
