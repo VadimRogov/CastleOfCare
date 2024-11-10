@@ -36,24 +36,15 @@ public class RoomBuilder : MonoBehaviour
                     cell.SetCellEmpty(false, false); // Устанавливаем ячейку как занятую
                     cell.isEmpty = false;
 
-                    if (moveLift.FindCabineLift() == true)
+                    foreach (Transform cabin in roomInstance.transform)
                     {
-                        foreach (Transform room in cell.transform)
+                        if (cabin.CompareTag("Cabin"))
                         {
-                            if(room.CompareTag("Lift"))
-                            {
-                                foreach (Transform cabin in room.transform)
-                                {
-                                    if (cabin.CompareTag("Cabin"))
-                                    {
-                                        Destroy(cabin.gameObject);
-                                    }
-                                }
-                            }
+                            Destroy(cabin.gameObject);
                         }
                     }
                     
-                }
+                }       
                 else
                 {
                     Debug.LogWarning("Lift can only be built in a cell with the 'Lift' tag.");

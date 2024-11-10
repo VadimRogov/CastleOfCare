@@ -132,15 +132,15 @@ public class Cell : MonoBehaviour
 
     public Transform FindRoomInCellByTag(string tag)
     {
-    foreach (Transform child in transform) // Перебираем все дочерние объекты ячейки
-    {
-        if (child.CompareTag(tag)) // Проверяем, совпадает ли тег
+        foreach (Transform child in transform) // Перебираем все дочерние объекты ячейки
         {
-            return child; // Возвращаем найденную комнату
+            if (child.CompareTag(tag)) // Проверяем, совпадает ли тег
+            {
+                return child; // Возвращаем найденную комнату
+            }
         }
-    }
 
-    Debug.LogWarning($"Комната с тегом '{tag}' не найдена в ячейке '{name}'.");
-    return null; // Если не нашли, возвращаем null
+        Debug.LogWarning($"Комната с тегом '{tag}' не найдена в ячейке '{name}'.");
+        return null; // Если не нашли, возвращаем null
     }
 }

@@ -1,18 +1,17 @@
 using UnityEngine;
 using System.Collections;
+
 public class Lift : MonoBehaviour
 {
-    [SerializeField] private Transform lDoor; // Левая дверь
-    [SerializeField] private Transform rDoor; // Правая дверь
+    [SerializeField] private Transform lDoor; // Р›РµРІР°СЏ РґРІРµСЂСЊ
+    [SerializeField] private Transform rDoor; // РџСЂР°РІР°СЏ РґРІРµСЂСЊ
 
-    private Vector3 lDoorClosedPosition; // Позиция закрытой левой двери
-    private Vector3 rDoorClosedPosition; // Позиция закрытой правой двери
-
-
+    private Vector3 lDoorClosedPosition; // РџРѕР·РёС†РёСЏ Р»РµРІРѕР№ РґРІРµСЂРё, РєРѕРіРґР° РѕРЅР° Р·Р°РєСЂС‹С‚Р°
+    private Vector3 rDoorClosedPosition; // РџРѕР·РёС†РёСЏ РїСЂР°РІРѕР№ РґРІРµСЂРё, РєРѕРіРґР° РѕРЅР° Р·Р°РєСЂС‹С‚Р°
 
     void Awake()
     {
-        // Получаем локальные координаты дверей при инициализации
+        // РЎРѕС…СЂР°РЅСЏРµРј РЅР°С‡Р°Р»СЊРЅС‹Рµ РїРѕР·РёС†РёРё Р·Р°РєСЂС‹С‚С‹С… РґРІРµСЂРµР№
         lDoorClosedPosition = lDoor.localPosition;
         rDoorClosedPosition = rDoor.localPosition;
     }
@@ -29,7 +28,7 @@ public class Lift : MonoBehaviour
 
     private IEnumerator OpenDoors()
     {
-        float duration = 1.0f; // Время анимации в секундах
+        float duration = 1.0f; // Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ РѕС‚РєСЂС‹С‚РёСЏ РґРІРµСЂРµР№
         float elapsedTime = 0f;
 
         Vector3 targetLPos = new Vector3(lDoorClosedPosition.x - 1.6f, lDoorClosedPosition.y, lDoorClosedPosition.z);
@@ -40,20 +39,20 @@ public class Lift : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / duration;
 
-            // Линейная интерполяция между текущей и целевой позицией
+            // РџР»Р°РІРЅРѕ РїРµСЂРµРјРµС‰Р°РµРј РґРІРµСЂРё РІ РѕС‚РєСЂС‹С‚С‹Рµ РїРѕР·РёС†РёРё
             lDoor.localPosition = Vector3.Lerp(lDoorClosedPosition, targetLPos, t);
             rDoor.localPosition = Vector3.Lerp(rDoorClosedPosition, targetRPos, t);
-            yield return null; // Ждем следующего кадра
+            yield return null; // Р–РґРµРј СЃР»РµРґСѓСЋС‰РµРіРѕ РєР°РґСЂР°
         }
 
-        // Убедимся, что двери установлены в конечные позиции
+        // РЈР±РµРґРёРјСЃСЏ, С‡С‚Рѕ РґРІРµСЂРё СѓСЃС‚Р°РЅРѕРІР»РµРЅС‹ РІ РєРѕРЅРµС‡РЅС‹Рµ РѕС‚РєСЂС‹С‚С‹Рµ РїРѕР·РёС†РёРё
         lDoor.localPosition = targetLPos;
         rDoor.localPosition = targetRPos;
     }
 
     private IEnumerator CloseDoors()
     {
-        float duration = 2.0f; // Время анимации в секундах
+        float duration = 2.0f; // Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ Р·Р°РєСЂС‹С‚РёСЏ РґРІРµСЂРµР№
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
@@ -61,13 +60,13 @@ public class Lift : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / duration;
 
-            // Линейная интерполяция между текущей и закрытой позицией
+            // РџР»Р°РІРЅРѕ РїРµСЂРµРјРµС‰Р°РµРј РґРІРµСЂРё РѕР±СЂР°С‚РЅРѕ РІ Р·Р°РєСЂС‹С‚С‹Рµ РїРѕР·РёС†РёРё
             lDoor.localPosition = Vector3.Lerp(lDoor.localPosition, lDoorClosedPosition, t);
             rDoor.localPosition = Vector3.Lerp(rDoor.localPosition, rDoorClosedPosition, t);
-            yield return null; // Ждем следующего кадра
+            yield return null; // Р–РґРµРј СЃР»РµРґСѓСЋС‰РµРіРѕ РєР°РґСЂР°
         }
 
-        // Убедимся, что двери установлены в конечные позиции
+        // РЈР±РµРґРёРјСЃСЏ, С‡С‚Рѕ РґРІРµСЂРё СѓСЃС‚Р°РЅРѕРІР»РµРЅС‹ РІ РєРѕРЅРµС‡РЅС‹Рµ Р·Р°РєСЂС‹С‚С‹Рµ РїРѕР·РёС†РёРё
         lDoor.localPosition = lDoorClosedPosition;
         rDoor.localPosition = rDoorClosedPosition;
     }

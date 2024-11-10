@@ -4,6 +4,7 @@ public class CellSelector : MonoBehaviour
 {
     private Camera mainCamera;
     private Cell currentHighlightedCell; // Храним ссылку на текущую выделенную ячейку
+    private bool isCellSelected = false; // Флаг, указывающий на то, выделена ли ячейка
 
     void Start()
     {
@@ -25,20 +26,36 @@ public class CellSelector : MonoBehaviour
                 Cell cell = hit.collider.GetComponent<Cell>(); // Получаем компонент Cell из объекта
                 if (cell != null)
                 {
-                    // Проверяем, является ли ячейка пустой
-                    if (cell.IsEmpty)
+                    // Проверяем, имеет ли объект тег GridCell или Lift
+                    if (hit.collider.CompareTag("GridCell") || hit.collider.CompareTag("Lift"))
                     {
-                        Debug.LogWarning("Cannot highlight an empty cell."); // Предупреждение о том, что ячейка пуста
-                        return; // Выходим из метода, если ячейка пуста
-                    }
+                        // Проверяем, является ли ячейка пустой
+                        if (cell.IsEmpty)
+                        {
+                            Debug.LogWarning("Cannot highlight an empty cell."); // Предупреждение о том, что ячейка пуста
+                            return; // Выходим из метода, если ячейка пуста
+                        }
 
-                    if (currentHighlightedCell != null && currentHighlightedCell != cell) 
+                        if (currentHighlightedCell != null && currentHighlightedCell != cell) 
+                        {
+                            currentHighlightedCell.RemoveHighlight(); // Снимаем выделение с предыдущей ячейки
+                        }
+
+                        HighlightCell(cell); // Выделяем новую ячейку
+                        currentHighlightedCell = cell; // Обновляем текущую выделенную ячейку
+                        isCellSelected = true; // Устанавливаем флаг выделения ячейки
+
+                        // Сбрасываем выделение персонажа при выборе новой ячейки
+                        CharacterSelector characterSelector = FindObjectOfType<CharacterSelector>();
+                        if (characterSelector != null && characterSelector.IsCharacterSelected)
+                        {
+                            characterSelector.DeselectCharacter();
+                        }
+                    }
+                    else
                     {
-                        currentHighlightedCell.RemoveHighlight(); // Снимаем выделение с предыдущей ячейки
+                        Debug.LogWarning("Clicked object is not a valid cell (GridCell or Lift)."); // Отладочное сообщение
                     }
-
-                    HighlightCell(cell); // Выделяем новую ячейку
-                    currentHighlightedCell = cell; // Обновляем текущую выделенную ячейку
                 }
                 else
                 {
@@ -52,8 +69,18 @@ public class CellSelector : MonoBehaviour
         }
     }
 
-    private void HighlightCell(Cell cell)
+    public void HighlightCell(Cell cell)
     {
         cell.HighlightCell(true); // Вызываем метод HighlightCell из класса Cell
+    }
+
+    public void DeselectCell() 
+    {
+        if (currentHighlightedCell != null) 
+        {
+            currentHighlightedCell.RemoveHighlight();
+            currentHighlightedCell = null;
+            isCellSelected = false; // Сбрасываем флаг выделения ячейки
+        }
     }
 }

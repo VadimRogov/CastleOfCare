@@ -19,6 +19,8 @@ TagManager:
   - Stage1
   - Stage2
   - Stage3
+  - Character
+  - Reception
   layers:
   - Default
   - TransparentFX
@@ -29,8 +31,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Character
+  - Cell
   - 
   - 
   - 
