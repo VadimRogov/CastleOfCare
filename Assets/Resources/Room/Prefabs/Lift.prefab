@@ -1876,6 +1876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lDoor: {fileID: 5247121889801383321}
   rDoor: {fileID: 6781461303875740462}
+  doorOpenSound: {fileID: 8300000, guid: 7437aca9b2552954f966ee3e96c0d5ec, type: 3}
 --- !u!1 &5128191864115457223
 GameObject:
   m_ObjectHideFlags: 0

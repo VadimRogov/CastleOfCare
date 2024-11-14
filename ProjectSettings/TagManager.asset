@@ -21,6 +21,11 @@ TagManager:
   - Stage3
   - Character
   - Reception
+  - Tosha
+  - MomTosha
+  - Kira
+  - DadKira
+  - Vitya
   layers:
   - Default
   - TransparentFX

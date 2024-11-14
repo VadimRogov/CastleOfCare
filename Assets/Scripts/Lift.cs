@@ -1,10 +1,14 @@
 using UnityEngine;
 using System.Collections;
 
+// Класс для управления дверьми лифта
 public class Lift : MonoBehaviour
 {
     [SerializeField] private Transform lDoor; // Левая дверь
     [SerializeField] private Transform rDoor; // Правая дверь
+    [SerializeField] private AudioClip doorOpenSound; // Звук открытия дверей
+
+    private AudioSource audioSource; // AudioSource для воспроизведения звуков
 
     private Vector3 lDoorClosedPosition; // Позиция левой двери, когда она закрыта
     private Vector3 rDoorClosedPosition; // Позиция правой двери, когда она закрыта
@@ -14,18 +18,28 @@ public class Lift : MonoBehaviour
         // Сохраняем начальные позиции закрытых дверей
         lDoorClosedPosition = lDoor.localPosition;
         rDoorClosedPosition = rDoor.localPosition;
+
+        // Получаем или добавляем AudioSource компонент
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
+    // Метод для открытия дверей
     public void SetOpenDoor()
     {
         StartCoroutine(OpenDoors());
     }
 
+    // Метод для закрытия дверей
     public void SetCloseDoor()
     {
         StartCoroutine(CloseDoors());
     }
 
+    // Корутина для открытия дверей
     private IEnumerator OpenDoors()
     {
         float duration = 1.0f; // Длительность открытия дверей
@@ -33,6 +47,11 @@ public class Lift : MonoBehaviour
 
         Vector3 targetLPos = new Vector3(lDoorClosedPosition.x - 1.6f, lDoorClosedPosition.y, lDoorClosedPosition.z);
         Vector3 targetRPos = new Vector3(rDoorClosedPosition.x + 1.6f, rDoorClosedPosition.y, rDoorClosedPosition.z);
+
+        if (doorOpenSound != null)
+        {
+            audioSource.PlayOneShot(doorOpenSound); // Воспроизведение звука открытия дверей
+        }
 
         while (elapsedTime < duration)
         {
@@ -50,6 +69,7 @@ public class Lift : MonoBehaviour
         rDoor.localPosition = targetRPos;
     }
 
+    // Корутина для закрытия дверей
     private IEnumerator CloseDoors()
     {
         float duration = 2.0f; // Длительность закрытия дверей

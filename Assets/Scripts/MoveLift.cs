@@ -1,9 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
+// Класс для управления перемещением кабины лифта
 public class MoveLift : MonoBehaviour
 {
-    public bool isCabin = false;
+    public bool isCabin = false; // Флаг, указывающий, найдена ли кабина
     [SerializeField] private Cell[] listLift; // Массив ячеек лифта
     public GameObject cellWithCabin; // Ячейка с кабиной лифта
     private Transform cabinTransform; // Трансформ кабины лифта
@@ -29,6 +30,7 @@ public class MoveLift : MonoBehaviour
         liftRigidbody.isKinematic = true; // Устанавливаем isKinematic в true для контроля через скрипт
     }
 
+    // Метод для поиска кабины лифта
     public bool FindCabineLift()
     {
         foreach (Cell cell in listLift)
@@ -54,6 +56,7 @@ public class MoveLift : MonoBehaviour
         return isCabin;
     }
 
+    // Метод для перемещения кабины лифта на целевой этаж
     public void MoveCabin(int targetIndex)
     {
         if (targetIndex < 0 || targetIndex >= listLift.Length)
@@ -63,7 +66,7 @@ public class MoveLift : MonoBehaviour
         }
         else if (targetIndex == 0)
         {
-            Debug.LogWarning("Лифт на 1 этаже");
+            Debug.LogWarning("Лифт на нужном этаже");
         }
 
         Cell targetCell = listLift[targetIndex];
@@ -79,6 +82,7 @@ public class MoveLift : MonoBehaviour
         }
     }
 
+    // Корутина для перемещения кабины лифта на целевой этаж
     private IEnumerator MoveToFloor(Cell targetCell)
     {
         Vector3 targetPosition = targetCell.transform.position; // Позиция целевой ячейки
@@ -127,6 +131,7 @@ public class MoveLift : MonoBehaviour
         }
     }
 
+    // Метод для проверки наличия лифта в ячейке
     private bool HasLift(Cell cell)
     {
         for (int j = 0; j < cell.transform.childCount; j++)
@@ -140,6 +145,7 @@ public class MoveLift : MonoBehaviour
         return false; // Лифт не найден в этой ячейке
     }
 
+    // Метод для отрисовки Gizmos (для отладки)
     void OnDrawGizmos()
     {
         if (cabinTransform != null)
@@ -155,5 +161,6 @@ public class MoveLift : MonoBehaviour
         }
     }
 
-    public Cell[] Cells => listLift; // Добавлено свойство для доступа к массиву ячеек лифта
+    // Свойство для доступа к массиву ячеек лифта
+    public Cell[] Cells => listLift;
 }
