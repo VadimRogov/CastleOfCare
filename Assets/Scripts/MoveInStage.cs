@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class MoveInStage : MonoBehaviour
@@ -7,9 +8,11 @@ public class MoveInStage : MonoBehaviour
     public float zOffset = 1.5f;
     public CellManager cellManager;
     public MoveLift moveLift;
-    public Cell currentCell; 
+    public Cell currentCell;
     public Cell targetCell;
     public Animator animator;
+    public Button moveButton; // Добавляем ссылку на кнопку
+
     private Stage currentStage;
     private Stage targetStage;
     private Lift roomLift;
@@ -18,6 +21,9 @@ public class MoveInStage : MonoBehaviour
 
     private void Start()
     {
+        // Подписка на событие нажатия кнопки
+        moveButton.onClick.AddListener(IsMove);
+
         foreach (Stage stage in cellManager.Stages)
         {
             foreach (Cell cell in stage.Cells)
@@ -117,7 +123,7 @@ public class MoveInStage : MonoBehaviour
 
     private IEnumerator SmoothMoveOnStage(Vector3 targetPosition)
     {
-        SetRunningAnimation(true); 
+        SetRunningAnimation(true);
 
         float startTime = Time.time;
         Vector3 startPosition = transform.position;
@@ -138,7 +144,7 @@ public class MoveInStage : MonoBehaviour
         }
 
         transform.position = new Vector3(targetPosition.x, currentY, startPosition.z);
-        SetRunningAnimation(false); 
+        SetRunningAnimation(false);
 
         Cell currentLift = FindLiftCell(currentStage);
         Lift liftRoom = null;
@@ -162,7 +168,7 @@ public class MoveInStage : MonoBehaviour
             if (cabin.CompareTag("Cabin"))
             {
                 StartCoroutine(MoveToCabin(cabin));
-                break; 
+                break;
             }
         }
     }
@@ -174,7 +180,7 @@ public class MoveInStage : MonoBehaviour
         float currentY = startPosition.y;
         float startTime = Time.time;
 
-        SetRunningAnimation(true); 
+        SetRunningAnimation(true);
 
         while (Mathf.Abs(transform.position.z - targetPosition.z) > 0.01f)
         {
@@ -193,7 +199,7 @@ public class MoveInStage : MonoBehaviour
         transform.position = new Vector3(startPosition.x, currentY, targetPosition.z);
         transform.SetParent(cabin);
 
-        isInLift = true; 
+        isInLift = true;
         roomLift.SetCloseDoor();
         moveLift.MoveCabin(GetIndexStage(targetStage));
 
@@ -201,7 +207,7 @@ public class MoveInStage : MonoBehaviour
 
         roomLift.SetOpenDoor();
 
-        SetRunningAnimation(false); 
+        SetRunningAnimation(false);
 
         yield return new WaitForSeconds(1);
         OutLift();
@@ -219,11 +225,11 @@ public class MoveInStage : MonoBehaviour
 
     private IEnumerator MoveOutOfLift(Vector3 targetPosition)
     {
-        
+
         Vector3 startPosition = transform.position;
         float startTime = Time.time;
 
-        SetRunningAnimation(true); 
+        SetRunningAnimation(true);
 
         while (Mathf.Abs(transform.position.x - targetPosition.x) > 0.01f || Mathf.Abs(transform.position.z - targetPosition.z) > 0.01f)
         {
@@ -234,12 +240,12 @@ public class MoveInStage : MonoBehaviour
             yield return null;
         }
 
-        transform.position = targetPosition; 
-        transform.SetParent(null); 
+        transform.position = targetPosition;
+        transform.SetParent(null);
 
-        isInLift = false; 
+        isInLift = false;
 
-        SetRunningAnimation(false); 
+        SetRunningAnimation(false);
 
         MoveToTargetRoom();
     }
@@ -255,7 +261,7 @@ public class MoveInStage : MonoBehaviour
         Vector3 startPosition = transform.position;
         float startTime = Time.time;
 
-        SetRunningAnimation(true); 
+        SetRunningAnimation(true);
 
         while (Mathf.Abs(transform.position.x - targetPosition.x) > 0.01f)
         {
@@ -271,8 +277,8 @@ public class MoveInStage : MonoBehaviour
             yield return null;
         }
 
-        transform.position = new Vector3(targetPosition.x, startPosition.y, startPosition.z); 
-        SetRunningAnimation(false); 
+        transform.position = new Vector3(targetPosition.x, startPosition.y, startPosition.z);
+        SetRunningAnimation(false);
     }
 
 
@@ -294,7 +300,7 @@ public class MoveInStage : MonoBehaviour
         float startTime = Time.time;
         Vector3 startPosition = transform.position;
 
-        SetRunningAnimation(true); 
+        SetRunningAnimation(true);
 
         while (Mathf.Abs(transform.position.x - targetPosition.x) > 0.01f)
         {
@@ -311,7 +317,7 @@ public class MoveInStage : MonoBehaviour
 
         transform.position = new Vector3(targetPosition.x, transform.position.y, transform.position.z);
 
-        SetRunningAnimation(false); 
+        SetRunningAnimation(false);
         Debug.Log("Персонаж достиг целевой комнаты на оси X.");
     }
 }

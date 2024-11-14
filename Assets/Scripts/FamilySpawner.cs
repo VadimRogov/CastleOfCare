@@ -1,14 +1,25 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using JetBrains.Annotations;
 
 public class FamilySpawner : MonoBehaviour
 {
+    public CellManager cellManager;
     public List<GameObject> familyPrefabs; // Список префабов для разных семей
     public int familyStayDuration = 10; // Время, сколько семья будет оставаться в комнате (в секундах)
-    
+
+    public Button face;
+
+    public Vector3 positionOffset; // Смещение позиции семьи, редактируемое в инспекторе
+    public Vector3 centerOffset; // Смещение для центрирования семьи в комнате, редактируемое в инспекторе
+
     private GameObject currentFamily;  // Текущая семья, которая находится в комнате
     private bool isFamilyInRoom = false; // Флаг, который проверяет, есть ли семья в комнате
     private int currentFamilyIndex = 0; // Индекс текущей семьи в списке
+
+    private Cell currtCell;
+    private Cell targetCell;
 
     private void Start()
     {
@@ -19,93 +30,96 @@ public class FamilySpawner : MonoBehaviour
     // Метод для создания семьи, если в комнате нет другой
     private void TrySpawnFamily()
     {
+
+
         Debug.Log("Пытаемся создать семью...");
 
         // Находим объект "Reception", куда будет добавляться семья
         GameObject receptionCenter = GameObject.FindGameObjectWithTag("Reception");
 
-        if (receptionCenter != null)
+        if (!isFamilyInRoom)
         {
-            // Проверяем, есть ли семья в комнате
-            if (receptionCenter.transform.childCount > 0)
-            {
-                Debug.Log("Семья уже находится в комнате. Дождитесь, пока она уйдет.");
-                return; // Если семья уже в комнате, не создаем новую
-            }
+            // Получаем позицию центра комнаты и добавляем смещение
+            Vector3 receptionPosition = receptionCenter.transform.position + positionOffset;
+            Debug.Log("Создаем семью: " + familyPrefabs[currentFamilyIndex].name);
 
-            // Проверяем, есть ли еще семьи в списке
-            if (currentFamilyIndex < familyPrefabs.Count)
-            {
-                // Получаем позицию центра комнаты
-                Vector3 receptionPosition = receptionCenter.transform.position;
-                Debug.Log("Создаем семью: " + familyPrefabs[currentFamilyIndex].name);
+            // Создаем семью из списка префабов
+            currentFamily = Instantiate(familyPrefabs[currentFamilyIndex], receptionPosition, Quaternion.identity);
+            currentFamily.transform.SetParent(receptionCenter.transform);
 
-                // Создаем семью из списка префабов
-                currentFamily = Instantiate(familyPrefabs[currentFamilyIndex], receptionPosition, Quaternion.identity);
-                currentFamily.transform.SetParent(receptionCenter.transform);
+            // Центрируем семью в комнате с учетом смещения центрирования
+            currentFamily.transform.localPosition += centerOffset;
 
-                // Центрируем семью в комнате
-                currentFamily.transform.localPosition = Vector3.zero;
+            // Помечаем, что семья находится в комнате
+            isFamilyInRoom = true;
+            Debug.Log("Семья успешно помещена в комнату.");
 
-                // Создаем персонажей внутри семьи
-                CreateFamilyMembers(currentFamily);
+            face.enabled = true;
 
-                // Помечаем, что семья находится в комнате
-                isFamilyInRoom = true;
-                Debug.Log("Семья успешно помещена в комнату.");
-
-                // Запускаем таймер для удаления семьи через определённое время
-                Invoke("RemoveFamily", familyStayDuration);
-
-                // Переходим к следующей семье в списке
-                currentFamilyIndex++;
-                Debug.Log("Перехожу к следующей семье, если таковая имеется.");
-            }
-            else
-            {
-                Debug.Log("Все семьи были размещены.");
-            }
-        }
-        else
-        {
-            Debug.LogError("Не найден объект с тегом 'Reception'. Убедитесь, что он существует на сцене.");
+            TargetMove();
         }
     }
 
-    // Метод для удаления семьи из комнаты
-    private void RemoveFamily()
+
+    public void TargetMove()
     {
-        Debug.Log("Время прошло, удаляю текущую семью из комнаты.");
-
-        if (currentFamily != null)
+        foreach (GameObject family in familyPrefabs)
         {
-            // Удаляем семью из комнаты
-            Destroy(currentFamily);
-
-            // Семья покинула комнату, теперь можем создать новую
-            isFamilyInRoom = false;
-
-            // Пытаемся создать следующую семью
-            TrySpawnFamily();
+            if (family != null)
+            {
+                if (family.CompareTag("Vitya"))
+                {
+                    
+                    MoveInStage moveInStage = Character(family);
+                    moveInStage.targetCell = TargetCell("Psyh");
+                    moveInStage.currentCell = family.GetComponent<Cell>();
+                }
+                else if (family.CompareTag("Kira"))
+                {
+                    MoveInStage moveInStage = Character(family);
+                    moveInStage.targetCell = TargetCell("Psyh");
+                    moveInStage.currentCell = family.GetComponent<Cell>();
+                }
+                else if (family.CompareTag("Tosha"))
+                {
+                    MoveInStage moveInStage = Character(family);
+                    moveInStage.targetCell = TargetCell("LFK");
+                    moveInStage.currentCell = family.GetComponent<Cell>();
+                }
+            }
         }
     }
 
-    // Метод для создания персонажей внутри семьи
-    private void CreateFamilyMembers(GameObject family)
+    public MoveInStage Character(GameObject family)
     {
-        // Предполагаем, что в каждом семейном префабе находятся персонажи
-        Transform[] familyMembers = family.GetComponentsInChildren<Transform>();
-
-        // Создаем каждого персонажа, если его нет в качестве дочернего объекта
-        foreach (Transform member in familyMembers)
+        foreach (Transform character in family.transform)
         {
-            // Пропускаем сам объект семьи
-            if (member == family.transform) continue;
-
-            // Персонажи уже находятся в семейном префабе, и мы можем манипулировать их позициями
-            member.gameObject.SetActive(true); // Делаем персонажа активным (если был выключен)
-            member.localPosition = new Vector3(0, 0, 0); // Здесь можно дополнительно настроить позицию персонажа
-            Debug.Log("Персонаж " + member.name + " стал активным в семье " + family.name);
+            if (character != null)
+            {
+                return character.gameObject.GetComponent<MoveInStage>();
+            }
         }
+        return null;
     }
+
+    public Cell TargetCell(string tag)
+    {
+        foreach (Stage stage in cellManager.Stages)
+        {
+            foreach (Cell cell in stage.Cells)
+            {
+                if (cell != null)
+                {
+                    if (cell.CompareTag(tag))
+                    {
+                        targetCell = cell;
+                        return targetCell;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+
 }
