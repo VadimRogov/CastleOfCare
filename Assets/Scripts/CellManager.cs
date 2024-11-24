@@ -37,4 +37,32 @@ public class CellManager : MonoBehaviour
         Debug.LogWarning($"Ячейка с комнатой с тегом '{tag}' не найдена ни на одной стадии.");
         return null; // Возвращаем null, если не нашли ни на одной стадии
     }
+
+    public Cell FindProcedureRoom(string roomTag)
+    {
+        foreach (Stage stage in Stages)
+        {
+            foreach (Cell cell in stage.Cells)
+            {
+                foreach (Transform room in cell.transform)
+                {
+                    if (room.CompareTag(roomTag)) 
+                    {
+                        foreach (Transform doctror in room.transform)
+                        {
+                            if(doctror.CompareTag(roomTag))
+                            {
+                                return cell;
+                            }
+                            else Debug.LogWarning("Не найден доктор");
+                        }
+                    }
+                    else Debug.LogWarning("Процедурная комната не найдена");
+                }
+            }
+        }
+        return null;
+    }
+
+
 }

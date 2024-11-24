@@ -26,6 +26,9 @@ TagManager:
   - Kira
   - DadKira
   - Vitya
+  - FamilyTosha
+  - FamilyVitya
+  - FamilyKira
   layers:
   - Default
   - TransparentFX

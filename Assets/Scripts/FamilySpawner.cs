@@ -1,125 +1,83 @@
 using UnityEngine;
-using System.Collections.Generic;
 using UnityEngine.UI;
-using JetBrains.Annotations;
 
 public class FamilySpawner : MonoBehaviour
 {
-    public CellManager cellManager;
-    public List<GameObject> familyPrefabs; // Список префабов для разных семей
-    public int familyStayDuration = 10; // Время, сколько семья будет оставаться в комнате (в секундах)
+    public GameObject[] listFamily; 
+    public GameObject reception; 
+    private int currentFamilyIndex = 0; 
 
-    public Button face;
+    private float timer = 0f; // Таймер для отслеживания времени
+    private float interval = 20f; // Интервал в секундах
 
-    public Vector3 positionOffset; // Смещение позиции семьи, редактируемое в инспекторе
-    public Vector3 centerOffset; // Смещение для центрирования семьи в комнате, редактируемое в инспекторе
+    public Button buttonPrefab; // Префаб кнопки с вашей текстурой
 
-    private GameObject currentFamily;  // Текущая семья, которая находится в комнате
-    private bool isFamilyInRoom = false; // Флаг, который проверяет, есть ли семья в комнате
-    private int currentFamilyIndex = 0; // Индекс текущей семьи в списке
+    public Button smail;
+    public GameObject imageNewPatient;
+    public Button sendDoctor;
 
-    private Cell currtCell;
-    private Cell targetCell;
-
-    private void Start()
+    public void CreatedFamily()
     {
-        Debug.Log("Запуск процесса создания семей...");
-        TrySpawnFamily(); // Попытка создать первую семью сразу при старте игры
-    }
-
-    // Метод для создания семьи, если в комнате нет другой
-    private void TrySpawnFamily()
-    {
-
-
-        Debug.Log("Пытаемся создать семью...");
-
-        // Находим объект "Reception", куда будет добавляться семья
-        GameObject receptionCenter = GameObject.FindGameObjectWithTag("Reception");
-
-        if (!isFamilyInRoom)
+        if (currentFamilyIndex >= listFamily.Length)
         {
-            // Получаем позицию центра комнаты и добавляем смещение
-            Vector3 receptionPosition = receptionCenter.transform.position + positionOffset;
-            Debug.Log("Создаем семью: " + familyPrefabs[currentFamilyIndex].name);
-
-            // Создаем семью из списка префабов
-            currentFamily = Instantiate(familyPrefabs[currentFamilyIndex], receptionPosition, Quaternion.identity);
-            currentFamily.transform.SetParent(receptionCenter.transform);
-
-            // Центрируем семью в комнате с учетом смещения центрирования
-            currentFamily.transform.localPosition += centerOffset;
-
-            // Помечаем, что семья находится в комнате
-            isFamilyInRoom = true;
-            Debug.Log("Семья успешно помещена в комнату.");
-
-            face.enabled = true;
-
-            TargetMove();
+            Debug.LogWarning("Все семьи уже созданы.");
+            return; 
         }
-    }
 
-
-    public void TargetMove()
-    {
-        foreach (GameObject family in familyPrefabs)
+        bool hasFamilyMembers = false;
+        foreach (Transform child in reception.transform)
         {
-            if (family != null)
+            if (child.CompareTag("FamilyKira") || 
+                child.CompareTag("FamilyTosha") || 
+                child.CompareTag("FamilyVitya"))
             {
-                if (family.CompareTag("Vitya"))
-                {
-                    
-                    MoveInStage moveInStage = Character(family);
-                    moveInStage.targetCell = TargetCell("Psyh");
-                    moveInStage.currentCell = family.GetComponent<Cell>();
-                }
-                else if (family.CompareTag("Kira"))
-                {
-                    MoveInStage moveInStage = Character(family);
-                    moveInStage.targetCell = TargetCell("Psyh");
-                    moveInStage.currentCell = family.GetComponent<Cell>();
-                }
-                else if (family.CompareTag("Tosha"))
-                {
-                    MoveInStage moveInStage = Character(family);
-                    moveInStage.targetCell = TargetCell("LFK");
-                    moveInStage.currentCell = family.GetComponent<Cell>();
-                }
+                hasFamilyMembers = true;
+                break; 
             }
         }
-    }
 
-    public MoveInStage Character(GameObject family)
-    {
-        foreach (Transform character in family.transform)
+        if (!hasFamilyMembers)
         {
-            if (character != null)
-            {
-                return character.gameObject.GetComponent<MoveInStage>();
-            }
-        }
-        return null;
-    }
+            Vector3 receptionPosition = reception.transform.position;
 
-    public Cell TargetCell(string tag)
-    {
-        foreach (Stage stage in cellManager.Stages)
+            GameObject familyInstance = Instantiate(listFamily[currentFamilyIndex]);
+            familyInstance.transform.SetParent(reception.transform);
+
+            Renderer familyRenderer = familyInstance.GetComponent<Renderer>();
+            if (familyRenderer != null)
+            {
+                Vector3 familySize = familyRenderer.bounds.size;
+                Vector3 familyPosition = new Vector3(receptionPosition.x, receptionPosition.y, receptionPosition.z - (familySize.z / 2));
+                familyInstance.transform.position = familyPosition; 
+
+                
+            }
+            else
+            {
+                Debug.LogWarning("У объекта семьи нет Renderer для расчета размеров.");
+            }
+
+            currentFamilyIndex++;
+        }
+        else 
         {
-            foreach (Cell cell in stage.Cells)
-            {
-                if (cell != null)
-                {
-                    if (cell.CompareTag(tag))
-                    {
-                        targetCell = cell;
-                        return targetCell;
-                    }
-                }
-            }
+            Debug.LogWarning("Комната не пуста");
         }
-        return null;
     }
 
+    public void Start()
+    {
+        CreatedFamily(); 
+    }
 
+    public void Update()
+    {
+       timer += Time.deltaTime;
+
+       if (timer >= interval)
+       {
+           CreatedFamily(); 
+           timer = 0f; 
+       }
+    }
 }

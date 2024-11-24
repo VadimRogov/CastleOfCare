@@ -34,7 +34,10 @@ public class CharacterSelector : MonoBehaviour
                 // Проверяем, является ли объект персонажем
                 if (clickedObject.CompareTag("Character") || 
                     clickedObject.CompareTag("Psych") || 
-                    clickedObject.CompareTag("LFK")) 
+                    clickedObject.CompareTag("LFK") ||
+                    clickedObject.CompareTag("Tosha") ||
+                    clickedObject.CompareTag("Kira") || 
+                    clickedObject.CompareTag("Vitya"))
                 {
                     clickedCharacter = clickedObject;
                     break; // Выходим из цикла, если нашли персонажа
