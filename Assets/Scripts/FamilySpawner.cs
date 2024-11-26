@@ -3,9 +3,9 @@ using UnityEngine.UI;
 
 public class FamilySpawner : MonoBehaviour
 {
-    public GameObject[] listFamily; 
-    public GameObject reception; 
-    private int currentFamilyIndex = 0; 
+    public GameObject[] listFamily;
+    public GameObject reception;
+    private int currentFamilyIndex = 0;
 
     private float timer = 0f; // Таймер для отслеживания времени
     private float interval = 20f; // Интервал в секундах
@@ -21,18 +21,18 @@ public class FamilySpawner : MonoBehaviour
         if (currentFamilyIndex >= listFamily.Length)
         {
             Debug.LogWarning("Все семьи уже созданы.");
-            return; 
+            return;
         }
 
         bool hasFamilyMembers = false;
         foreach (Transform child in reception.transform)
         {
-            if (child.CompareTag("FamilyKira") || 
-                child.CompareTag("FamilyTosha") || 
+            if (child.CompareTag("FamilyKira") ||
+                child.CompareTag("FamilyTosha") ||
                 child.CompareTag("FamilyVitya"))
             {
                 hasFamilyMembers = true;
-                break; 
+                break;
             }
         }
 
@@ -48,9 +48,7 @@ public class FamilySpawner : MonoBehaviour
             {
                 Vector3 familySize = familyRenderer.bounds.size;
                 Vector3 familyPosition = new Vector3(receptionPosition.x, receptionPosition.y, receptionPosition.z - (familySize.z / 2));
-                familyInstance.transform.position = familyPosition; 
-
-                
+                familyInstance.transform.position = familyPosition;
             }
             else
             {
@@ -58,8 +56,18 @@ public class FamilySpawner : MonoBehaviour
             }
 
             currentFamilyIndex++;
+
+            // Активируем объекты smail и imageNewPatient
+            if (smail != null)
+            {
+                smail.gameObject.SetActive(true);
+            }
+            if (imageNewPatient != null)
+            {
+                imageNewPatient.SetActive(true);
+            }
         }
-        else 
+        else
         {
             Debug.LogWarning("Комната не пуста");
         }
@@ -67,17 +75,27 @@ public class FamilySpawner : MonoBehaviour
 
     public void Start()
     {
-        CreatedFamily(); 
+        // Деактивируем объекты smail и imageNewPatient в начале
+        if (smail != null)
+        {
+            smail.gameObject.SetActive(false);
+        }
+        if (imageNewPatient != null)
+        {
+            imageNewPatient.SetActive(false);
+        }
+
+        CreatedFamily();
     }
 
     public void Update()
     {
-       timer += Time.deltaTime;
+        timer += Time.deltaTime;
 
-       if (timer >= interval)
-       {
-           CreatedFamily(); 
-           timer = 0f; 
-       }
+        if (timer >= interval)
+        {
+            CreatedFamily();
+            timer = 0f;
+        }
     }
 }

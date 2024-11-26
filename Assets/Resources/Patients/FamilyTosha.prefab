@@ -4485,6 +4485,7 @@ GameObject:
   - component: {fileID: 4637506576572086185}
   - component: {fileID: 999272377518121172}
   - component: {fileID: 5388714684837501243}
+  - component: {fileID: 752724190399555678}
   m_Layer: 9
   m_Name: Tosha
   m_TagString: Tosha
@@ -4571,6 +4572,22 @@ MonoBehaviour:
   targetCell: {fileID: 0}
   animator: {fileID: 4637506576572086185}
   moveButton: {fileID: 0}
+--- !u!114 &752724190399555678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6579638696211465829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8680c13c683d4a4d8bc6f8a821ca343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doctor: Psych
+  chamber: {fileID: 0}
+  roomDoctor: {fileID: 0}
+  progress: 0
 --- !u!1 &6662319657577578783
 GameObject:
   m_ObjectHideFlags: 0

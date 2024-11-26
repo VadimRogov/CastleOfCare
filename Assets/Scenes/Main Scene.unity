@@ -12427,7 +12427,7 @@ GameObject:
   - component: {fileID: 1491213754}
   - component: {fileID: 1491213753}
   - component: {fileID: 1491213752}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Smail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13107,9 +13107,9 @@ MonoBehaviour:
   - {fileID: 8699985392205191685, guid: 16dd9a8ad5fa46f469fd339071534224, type: 3}
   reception: {fileID: 1570192161}
   buttonPrefab: {fileID: 6771543322914228351, guid: 248eb2090edea324f9930ebe38c138a3, type: 3}
-  smail: {fileID: 0}
-  imageNewPatient: {fileID: 0}
-  sendDoctor: {fileID: 0}
+  smail: {fileID: 1491213752}
+  imageNewPatient: {fileID: 1382962783}
+  sendDoctor: {fileID: 1787760511}
 --- !u!1 &1639691082
 GameObject:
   m_ObjectHideFlags: 0

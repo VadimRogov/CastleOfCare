@@ -2537,6 +2537,7 @@ GameObject:
   - component: {fileID: 7547997908206385135}
   - component: {fileID: 573285077029689319}
   - component: {fileID: 7803506327211948737}
+  - component: {fileID: 7249247589110496308}
   m_Layer: 9
   m_Name: Vitya
   m_TagString: Character
@@ -2623,6 +2624,22 @@ MonoBehaviour:
   targetCell: {fileID: 0}
   animator: {fileID: 7547997908206385135}
   moveButton: {fileID: 0}
+--- !u!114 &7249247589110496308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4736716280766048765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8680c13c683d4a4d8bc6f8a821ca343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doctor: LFK
+  chamber: {fileID: 0}
+  roomDoctor: {fileID: 0}
+  progress: 0
 --- !u!1 &4762362763283967679
 GameObject:
   m_ObjectHideFlags: 0

@@ -48,9 +48,9 @@ public class CellManager : MonoBehaviour
                 {
                     if (room.CompareTag(roomTag)) 
                     {
-                        foreach (Transform doctror in room.transform)
+                        foreach (Transform doctor in room.transform)
                         {
-                            if(doctror.CompareTag(roomTag))
+                            if(doctor.CompareTag(roomTag))
                             {
                                 return cell;
                             }
@@ -64,5 +64,22 @@ public class CellManager : MonoBehaviour
         return null;
     }
 
-
+    public Cell FindRoomOnTag(string roomTag)
+    {
+        foreach (Stage stage in Stages)
+        {
+            foreach (Cell cell in stage.Cells)
+            {
+                foreach (Transform room in cell.transform)
+                {
+                    if (room.CompareTag(roomTag))
+                    {
+                        return cell;
+                    }
+                    else Debug.LogWarning("Процедурная комната не найдена");
+                }
+            }
+        }
+        return null;
+    }
 }

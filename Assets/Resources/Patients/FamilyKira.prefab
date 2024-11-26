@@ -4883,6 +4883,7 @@ GameObject:
   - component: {fileID: 8420150438719802052}
   - component: {fileID: 484876563217531676}
   - component: {fileID: 7607234219831942315}
+  - component: {fileID: 8952054418442048868}
   m_Layer: 9
   m_Name: Kira
   m_TagString: Kira
@@ -4996,6 +4997,22 @@ MonoBehaviour:
   targetCell: {fileID: 0}
   animator: {fileID: 3313688521301036958}
   moveButton: {fileID: 0}
+--- !u!114 &8952054418442048868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6561420423328886131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8680c13c683d4a4d8bc6f8a821ca343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doctor: Psych
+  chamber: {fileID: 0}
+  roomDoctor: {fileID: 0}
+  progress: 0
 --- !u!1 &6694114729427122118
 GameObject:
   m_ObjectHideFlags: 0
