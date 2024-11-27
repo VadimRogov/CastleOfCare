@@ -109,32 +109,27 @@ public class ButtonManager : MonoBehaviour, IPointerClickHandler
                         currentPatient = patient.gameObject.GetComponent<Patient>();
                         doctor = patient.gameObject.GetComponent<Patient>().doctor;
                         Debug.LogWarning("doctor: " + doctor);
+
+                        Cell roomProcedure = cellManager.FindProcedureRoom(doctor);
+                        Debug.LogWarning("roomProcedure: " + roomProcedure.name);
+                        Cell roomChamber = cellManager.FindRoomOnTag("Chamber");
+                        Debug.LogWarning("roomChamber: " + roomChamber.name);
+
+                        if (roomProcedure != null)
+                        {
+                            currentPatient.gameObject.GetComponent<Patient>().roomDoctor = roomProcedure;
+                            currentPatient.gameObject.GetComponent<Patient>().chamber = roomChamber;
+                        }
+                        else Debug.LogWarning("roomProcedure не найден");
+
+                        patient.gameObject.GetComponent<MoveInStage>().cellManager = cellManager;
+                        patient.gameObject.GetComponent<MoveInStage>().moveLift = FindObjectOfType<MoveLift>();
+
+                        patient.gameObject.GetComponent<MoveInStage>().currentCell = currentPatient.FindCharacter(currentPatient);
+
                     }
                 }
             }
         }
-        Cell roomProcedure = cellManager.FindProcedureRoom(doctor);
-        Debug.LogWarning("roomProcedur" + roomProcedure.name);
-        Cell roomChamber = cellManager.FindRoomOnTag("Chamber");
-        Debug.LogWarning("roomChamber" + roomChamber.name);
-        if (roomProcedure != null)
-        {
-            currentPatient.gameObject.GetComponent<Patient>().roomDoctor = roomProcedure;
-            currentPatient.gameObject.GetComponent<Patient>().chamber = roomChamber;
-
-            move.gameObject.GetComponent<MoveInStage>().cellManager = cellManager;
-            move.gameObject.GetComponent<MoveInStage>().moveLift = FindObjectOfType<MoveLift>();
-            move.gameObject.GetComponent<MoveInStage>().currentCell = cellManager.FindRoomOnTag("Reception");
-            move.gameObject.GetComponent<MoveInStage>().targetCell = currentPatient.gameObject.GetComponent<Patient>().roomDoctor;
-            Debug.Log("move инициализирован");
-            move.Move();
-        }
-        else
-        {
-            Debug.LogWarning("roomProcedure не найден");
-        }
-        Debug.Log("Кнопка 2 нажата");
     }
-
-    // Добавьте остальные методы для других кнопок
 }

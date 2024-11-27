@@ -54,10 +54,8 @@ public class CellManager : MonoBehaviour
                             {
                                 return cell;
                             }
-                            else Debug.LogWarning("Не найден доктор");
                         }
                     }
-                    else Debug.LogWarning("Процедурная комната не найдена");
                 }
             }
         }
@@ -76,7 +74,6 @@ public class CellManager : MonoBehaviour
                     {
                         return cell;
                     }
-                    else Debug.LogWarning("Процедурная комната не найдена");
                 }
             }
         }
