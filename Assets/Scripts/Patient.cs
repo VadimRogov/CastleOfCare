@@ -16,14 +16,11 @@ public class Patient : MonoBehaviour
             {
                 foreach (Transform room in cell.transform)
                 {
-                    foreach (Transform family in room.transform)
+                    foreach (Transform patient in room.transform)
                     {
-                        foreach (Transform patient in family.transform)
+                        if (patient.gameObject.GetComponent<Patient>() == character)
                         {
-                            if (patient.gameObject.GetComponent<Patient>() == character)
-                            {
-                                return cell;
-                            }
+                            return cell;
                         }
                     }
                 }

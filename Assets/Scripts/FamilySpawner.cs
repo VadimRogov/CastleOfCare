@@ -27,9 +27,9 @@ public class FamilySpawner : MonoBehaviour
         bool hasFamilyMembers = false;
         foreach (Transform child in reception.transform)
         {
-            if (child.CompareTag("FamilyKira") ||
-                child.CompareTag("FamilyTosha") ||
-                child.CompareTag("FamilyVitya"))
+            if (child.CompareTag("Kira") ||
+                child.CompareTag("Tosha") ||
+                child.CompareTag("Vitya"))
             {
                 hasFamilyMembers = true;
                 break;

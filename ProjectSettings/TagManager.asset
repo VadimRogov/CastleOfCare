@@ -29,6 +29,8 @@ TagManager:
   - FamilyTosha
   - FamilyVitya
   - FamilyKira
+  - MomVitya
+  - MomKira
   layers:
   - Default
   - TransparentFX

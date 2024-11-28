@@ -94,41 +94,39 @@ public class ButtonManager : MonoBehaviour, IPointerClickHandler
         Patient currentPatient = null;
         string doctor = "";
         MoveInStage move = null;
-        foreach (Transform family in reception.transform)
+
+        foreach (Transform patient in reception.transform)
         {
-            if (family.CompareTag("FamilyKira") ||
-                family.CompareTag("FamilyTosha") ||
-                family.CompareTag("FamilyVitya"))
+            if (patient.CompareTag("Kira") ||
+                patient.CompareTag("Vitya") ||
+                patient.CompareTag("Tosha"))
             {
-                foreach (Transform patient in family.gameObject.transform.GetComponentsInChildren<Transform>())
+                currentPatient = patient.gameObject.GetComponent<Patient>();
+                doctor = patient.gameObject.GetComponent<Patient>().doctor;
+                Debug.LogWarning("doctor: " + doctor);
+
+                Cell roomProcedure = cellManager.FindProcedureRoom(doctor);
+                Debug.LogWarning("roomProcedure: " + roomProcedure.name);
+                Cell roomChamber = cellManager.FindRoomOnTag("Chamber");
+                Debug.LogWarning("roomChamber: " + roomChamber.name);
+
+                if (roomProcedure != null)
                 {
-                    if (patient.CompareTag("Kira") ||
-                        patient.CompareTag("Vitya") ||
-                        patient.CompareTag("Tosha"))
-                    {
-                        currentPatient = patient.gameObject.GetComponent<Patient>();
-                        doctor = patient.gameObject.GetComponent<Patient>().doctor;
-                        Debug.LogWarning("doctor: " + doctor);
+                    currentPatient.gameObject.GetComponent<Patient>().roomDoctor = roomProcedure;
+                    currentPatient.gameObject.GetComponent<Patient>().chamber = roomChamber;
+                    currentPatient.gameObject.GetComponent<Patient>().cellManager = cellManager;
+                    currentPatient.gameObject.GetComponent<Patient>().progress = 0;
 
-                        Cell roomProcedure = cellManager.FindProcedureRoom(doctor);
-                        Debug.LogWarning("roomProcedure: " + roomProcedure.name);
-                        Cell roomChamber = cellManager.FindRoomOnTag("Chamber");
-                        Debug.LogWarning("roomChamber: " + roomChamber.name);
-
-                        if (roomProcedure != null)
-                        {
-                            currentPatient.gameObject.GetComponent<Patient>().roomDoctor = roomProcedure;
-                            currentPatient.gameObject.GetComponent<Patient>().chamber = roomChamber;
-                        }
-                        else Debug.LogWarning("roomProcedure не найден");
-
-                        patient.gameObject.GetComponent<MoveInStage>().cellManager = cellManager;
-                        patient.gameObject.GetComponent<MoveInStage>().moveLift = FindObjectOfType<MoveLift>();
-
-                        patient.gameObject.GetComponent<MoveInStage>().currentCell = currentPatient.FindCharacter(currentPatient);
-
-                    }
                 }
+                else Debug.LogWarning("roomProcedure не найден");
+
+                patient.gameObject.GetComponent<MoveInStage>().cellManager = cellManager;
+                patient.gameObject.GetComponent<MoveInStage>().moveLift = FindObjectOfType<MoveLift>();
+
+                patient.gameObject.GetComponent<MoveInStage>().currentCell = currentPatient.FindCharacter(currentPatient);
+                patient.gameObject.GetComponent<MoveInStage>().targetCell = roomProcedure;
+
+                patient.gameObject.GetComponent<MoveInStage>().IsMove();
             }
         }
     }

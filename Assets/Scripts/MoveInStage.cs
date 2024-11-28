@@ -19,29 +19,6 @@ public class MoveInStage : MonoBehaviour
     private bool isInLift = false;
     private bool isRun = false;
 
-    private void Start()
-    {
-        // Подписка на событие нажатия кнопки
-        moveButton.onClick.AddListener(IsMove);
-
-        foreach (Stage stage in cellManager.Stages)
-        {
-            foreach (Cell cell in stage.Cells)
-            {
-                if (currentCell == cell)
-                {
-                    Debug.LogWarning("Текущая ячейка найдена");
-                    currentStage = stage;
-                }
-                else if (targetCell == cell)
-                {
-                    Debug.LogWarning("Целевая ячейка найдена");
-                    targetStage = stage;
-                }
-            }
-        }
-    }
-
     public void IsMove()
     {
         if (IsStage())
@@ -118,6 +95,7 @@ public class MoveInStage : MonoBehaviour
 
     public void EnterInRoomLift(Cell currentLiftCell)
     {
+        Debug.LogWarning("Входит в комнату лифта");
         StartCoroutine(SmoothMoveOnStage(currentLiftCell.transform.position));
     }
 
@@ -163,6 +141,7 @@ public class MoveInStage : MonoBehaviour
 
     public void EnterElevator(Lift liftRoom)
     {
+        Debug.LogWarning("Вход в кабине лифта");
         foreach (Transform cabin in liftRoom.transform)
         {
             if (cabin.CompareTag("Cabin"))
@@ -181,6 +160,7 @@ public class MoveInStage : MonoBehaviour
         float startTime = Time.time;
 
         SetRunningAnimation(true);
+        transform.SetParent(cabin);
 
         while (Mathf.Abs(transform.position.z - targetPosition.z) > 0.01f)
         {
@@ -197,12 +177,12 @@ public class MoveInStage : MonoBehaviour
         }
 
         transform.position = new Vector3(startPosition.x, currentY, targetPosition.z);
-        transform.SetParent(cabin);
+        
 
         isInLift = true;
         roomLift.SetCloseDoor();
-        moveLift.MoveCabin(GetIndexStage(targetStage));
 
+        moveLift.MoveCabin(GetIndexStage(targetStage));
         currentCell = FindLiftCell(targetStage);
 
         roomLift.SetOpenDoor();
@@ -210,11 +190,13 @@ public class MoveInStage : MonoBehaviour
         SetRunningAnimation(false);
 
         yield return new WaitForSeconds(1);
+
         OutLift();
     }
 
     private void OutLift()
     {
+        Debug.LogWarning("Выход из лифта");
         if (!isInLift) return;
 
         Vector3 exitPosition = transform.position + transform.forward * 1.5f;
@@ -252,12 +234,14 @@ public class MoveInStage : MonoBehaviour
 
     private void MoveToTargetRoom()
     {
-        roomLift.SetCloseDoor();
+
         StartCoroutine(MoveToTargetCellPosition(targetCell.transform.position));
+        roomLift.SetCloseDoor();
     }
 
     private IEnumerator MoveToTargetCellPosition(Vector3 targetPosition)
     {
+
         Vector3 startPosition = transform.position;
         float startTime = Time.time;
 
@@ -278,6 +262,7 @@ public class MoveInStage : MonoBehaviour
         }
 
         transform.position = new Vector3(targetPosition.x, startPosition.y, startPosition.z);
+        transform.SetParent(targetCell.transform);
         SetRunningAnimation(false);
     }
 
@@ -316,6 +301,16 @@ public class MoveInStage : MonoBehaviour
         }
 
         transform.position = new Vector3(targetPosition.x, transform.position.y, transform.position.z);
+        foreach (Transform room in targetCell.transform)
+        {
+            if (room.CompareTag("LFK") || 
+                room.CompareTag("Psych"))
+            {
+                transform.SetParent(room);
+            }
+            
+        }
+         
 
         SetRunningAnimation(false);
         Debug.Log("Персонаж достиг целевой комнаты на оси X.");
