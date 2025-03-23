@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 // Класс для управления перемещением кабины лифта
 public class MoveLift : MonoBehaviour
 {
+    public event Action OnLiftMovementComplete; // Событие завершения перемещения лифта
     public bool isCabin = false; // Флаг, указывающий, найдена ли кабина
     [SerializeField] private Cell[] listLift; // Массив ячеек лифта
     public GameObject cellWithCabin; // Ячейка с кабиной лифта
@@ -85,16 +87,15 @@ public class MoveLift : MonoBehaviour
     // Корутина для перемещения кабины лифта на целевой этаж
     private IEnumerator MoveToFloor(Cell targetCell)
     {
-        Vector3 targetPosition = targetCell.transform.position; // Позиция целевой ячейки
-        Vector3 startPosition = cabinTransform.position; // Начальная позиция кабины
+        Vector3 targetPosition = targetCell.transform.position;
+        Vector3 startPosition = cabinTransform.position;
 
-        // Корректируем целевую позицию по X, Y и Z с учетом смещения
-        targetPosition.x += xOffset; // Учитываем смещение по X
-        float cabinHeight = cabinTransform.localScale.y / 2; // Высота кабины
-        targetPosition.y += cabinHeight + yOffset; // Учитываем высоту и смещение по Y
-        targetPosition.z += zOffset; // Учитываем смещение по Z
+        targetPosition.x += xOffset;
+        float cabinHeight = cabinTransform.localScale.y / 2;
+        targetPosition.y += cabinHeight + yOffset;
+        targetPosition.z += zOffset;
 
-        float duration = 1.0f; // Длительность перемещения
+        float duration = 1.0f;
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
@@ -102,16 +103,17 @@ public class MoveLift : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / duration;
 
-            // Плавно перемещаем кабину к целевой позиции с использованием Rigidbody
-            liftRigidbody.MovePosition(Vector3.Lerp(startPosition, targetPosition, t));
-            yield return null; // Ждем следующего кадра
+            // Используем плавное перемещение с помощью Lerp
+            Vector3 newPosition = Vector3.Lerp(startPosition, targetPosition, t);
+            liftRigidbody.MovePosition(newPosition);
+            yield return null;
         }
 
-        // Устанавливаем финальную позицию и меняем родителя
+        // Устанавливаем финальную позицию
+        liftRigidbody.MovePosition(targetPosition);
         cabinTransform.position = targetPosition;
 
         Transform newRoom = null;
-
         foreach (Transform room in targetCell.transform)
         {
             if (room.CompareTag("Lift"))
@@ -122,8 +124,11 @@ public class MoveLift : MonoBehaviour
 
         if (newRoom != null)
         {
-            cabinTransform.SetParent(newRoom); // Устанавливаем новым родителем комнату на этаже
+            cabinTransform.SetParent(newRoom);
             Debug.Log($"Кабина лифта теперь является дочерним объектом комнаты: {newRoom.name}");
+            
+            // Вызываем событие завершения перемещения
+            OnLiftMovementComplete?.Invoke();
         }
         else
         {

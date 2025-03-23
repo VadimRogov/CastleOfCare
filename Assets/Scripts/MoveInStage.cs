@@ -180,12 +180,12 @@ public class MoveInStage : MonoBehaviour
         
 
         isInLift = true;
-        roomLift.SetCloseDoor();
+        //roomLift.SetCloseDoor();
 
         moveLift.MoveCabin(GetIndexStage(targetStage));
         currentCell = FindLiftCell(targetStage);
 
-        roomLift.SetOpenDoor();
+        //roomLift.SetOpenDoor();
 
         SetRunningAnimation(false);
 
@@ -236,7 +236,7 @@ public class MoveInStage : MonoBehaviour
     {
 
         StartCoroutine(MoveToTargetCellPosition(targetCell.transform.position));
-        roomLift.SetCloseDoor();
+        //roomLift.SetCloseDoor();
     }
 
     private IEnumerator MoveToTargetCellPosition(Vector3 targetPosition)

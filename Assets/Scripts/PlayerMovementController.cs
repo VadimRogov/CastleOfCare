@@ -12,6 +12,8 @@ public class PlayerMovementController : MonoBehaviour
     public Cell targetCell;
     
     private bool isRunning = false; // Для анимации бега
+    private bool isInLift = false;
+    private bool isMovingToTarget = false;
 
     private void Start()
     {
@@ -26,6 +28,50 @@ public class PlayerMovementController : MonoBehaviour
 
         if (currentCell == null || targetCell == null)
             Debug.LogError("Текущая или целевая ячейка не назначены!");
+
+        // Подписываемся на событие завершения перемещения лифта
+        moveLift.OnLiftMovementComplete += OnLiftMovementComplete;
+    }
+
+    private void OnDestroy()
+    {
+        // Отписываемся от события при уничтожении объекта
+        if (moveLift != null)
+            moveLift.OnLiftMovementComplete -= OnLiftMovementComplete;
+    }
+
+    private void OnLiftMovementComplete()
+    {
+        if (isInLift)
+        {
+            StartCoroutine(CompleteLiftMovement());
+        }
+    }
+
+    private IEnumerator CompleteLiftMovement()
+    {
+        // Находим лифт на целевом этаже
+        Stage targetStage = GetStageForCell(targetCell);
+        Cell targetLiftCell = FindLiftCell(targetStage);
+        
+        if (targetLiftCell == null)
+        {
+            Debug.LogError("Лифт не найден на целевом этаже!");
+            yield break;
+        }
+
+        // Перемещаем персонажа к лифту на целевом этаже
+        Vector3 targetPosition = targetLiftCell.transform.position;
+        while (Mathf.Abs(transform.position.x - targetPosition.x) > 0.01f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        transform.position = targetPosition;
+        currentCell = targetLiftCell;
+        isInLift = false;
+        SetRunningAnimation(false);
     }
 
     public void MoveToTarget(Cell newTargetCell)
@@ -153,12 +199,38 @@ public class PlayerMovementController : MonoBehaviour
 
     private IEnumerator EnterLift(Cell liftCell)
     {
-        // Пример анимации или движения к лифту
+        isInLift = true;
         Debug.Log("Вход в лифт...");
 
-        // Добавьте сюда анимацию или дополнительную логику для входа в лифт
+        // Находим целевой этаж
+        Stage targetStage = GetStageForCell(targetCell);
+        if (targetStage == null)
+        {
+            Debug.LogError("Целевой этаж не найден!");
+            yield break;
+        }
 
-        SetRunningAnimation(false); // Отключаем анимацию бега
+        // Находим индекс целевого этажа
+        int targetIndex = -1;
+        for (int i = 0; i < cellManager.Stages.Length; i++)
+        {
+            if (cellManager.Stages[i] == targetStage)
+            {
+                targetIndex = i;
+                break;
+            }
+        }
+        
+        if (targetIndex == -1)
+        {
+            Debug.LogError("Не удалось найти индекс целевого этажа!");
+            yield break;
+        }
+
+        // Перемещаем кабину лифта
+        moveLift.MoveCabin(targetIndex);
+        
+        // Ждем завершения перемещения лифта через событие OnLiftMovementComplete
         yield return null;
     }
 
